@@ -364,6 +364,55 @@ a.status-indicator:hover .dot {
     box-shadow: 0 0 15px #2ea043, 0 0 30px #2ea043;
 }
 
+/* Status Tooltip */
+.status-tooltip {
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    width: 200px;
+    background: rgba(13, 17, 23, 0.95);
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.status-indicator:hover .status-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.status-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -6px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: var(--primary-color) transparent transparent transparent;
+}
+
+.tooltip-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+}
+
+.tooltip-row span:last-child {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
 /* Sections */
 .section {
     padding: 6rem 10%;

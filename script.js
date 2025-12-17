@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mobile Menu Toggle
     const mobileBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
-    
+
     if (mobileBtn) {
         mobileBtn.addEventListener('click', () => {
             navLinks.classList.toggle('mobile-active');
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 icon.classList.add('fa-bars');
             }
         });
-        
+
         // Close menu when clicking a link
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
@@ -257,6 +257,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 icon.classList.remove('fa-times');
                 icon.classList.add('fa-bars');
             });
+        });
+    }
+
+    // 7. Status Tooltip Logic
+    const statusIndicator = document.querySelector('.status-indicator');
+    const tooltipLatency = document.getElementById('tooltip-latency');
+    const tooltipRequests = document.getElementById('tooltip-requests');
+    const metricsEndpoint = 'https://970sm9mib1.execute-api.us-east-1.amazonaws.com/metrics';
+    let metricsFetched = false;
+
+    if (statusIndicator) {
+        statusIndicator.addEventListener('mouseenter', async () => {
+            if (metricsFetched) return; // cache for session? or fetch every time? let's fetch if loading not done
+
+            try {
+                const response = await fetch(metricsEndpoint);
+                if (response.ok) {
+                    const data = await response.json();
+
+                    if (tooltipLatency) {
+                        tooltipLatency.innerText = parseFloat(data.avg_duration).toFixed(0) + ' ms';
+                    }
+                    if (tooltipRequests) {
+                        tooltipRequests.innerText = parseInt(data.invocations).toLocaleString();
+                    }
+                    metricsFetched = true; // Avoid spamming API on every hover, optional
+                } else {
+                    throw new Error('API Error');
+                }
+            } catch (error) {
+                console.error('Error fetching metrics:', error);
+                if (tooltipLatency) tooltipLatency.innerText = 'Err';
+                if (tooltipRequests) tooltipRequests.innerText = 'Err';
+            }
         });
     }
 
