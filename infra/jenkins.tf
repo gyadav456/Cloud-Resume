@@ -42,10 +42,15 @@ resource "aws_key_pair" "generated_key" {
   public_key = tls_private_key.jenkins_key.public_key_openssh
 }
 
-resource "local_file" "private_key" {
-  content  = tls_private_key.jenkins_key.private_key_pem
-  filename = "${path.module}/jenkins-key.pem"
-  file_permission = "0400"
+resource "aws_secretsmanager_secret" "jenkins_secret_key" {
+  name        = "jenkins_server_private_key_v2" # v2 to ensure uniqueness if v1 exists
+  description = "Private key for Jenkins Server"
+  recovery_window_in_days = 0 
+}
+
+resource "aws_secretsmanager_secret_version" "jenkins_secret_key_val" {
+  secret_id     = aws_secretsmanager_secret.jenkins_secret_key.id
+  secret_string = tls_private_key.jenkins_key.private_key_pem
 }
 
 # --- EC2 Instance ---
