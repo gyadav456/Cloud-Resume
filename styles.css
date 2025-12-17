@@ -349,6 +349,21 @@ body {
     margin-bottom: 0.5rem;
 }
 
+a.status-indicator {
+    text-decoration: none;
+    color: var(--text-color);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+a.status-indicator:hover {
+    transform: translateY(-2px);
+}
+
+a.status-indicator:hover .dot {
+    box-shadow: 0 0 15px #2ea043, 0 0 30px #2ea043;
+}
+
 /* Sections */
 .section {
     padding: 6rem 10%;
@@ -602,6 +617,8 @@ footer {
         display: block;
         order: 3;
         /* Logo(1) - Controls(2) - Menu(3) */
+        position: relative;
+        z-index: 1002;
     }
 
     .logo {
@@ -626,10 +643,11 @@ footer {
         -webkit-backdrop-filter: blur(15px);
         flex-direction: column;
         padding: 2rem;
-        gap: 1.5rem;
+        gap: 2rem;
         border-bottom: 1px solid var(--glass-border);
         text-align: center;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        z-index: 1001;
     }
 
     .nav-links.mobile-active {
@@ -666,9 +684,30 @@ footer {
     }
 
     .hero-visual {
-        width: 280px;
-        height: 280px;
+        width: 320px;
+        height: 320px;
         margin: 0 auto;
+    }
+
+    .float {
+        padding: 0.8rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .float:nth-child(1) {
+        top: 0;
+        left: 0;
+    }
+
+    .float:nth-child(2) {
+        top: 40%;
+        right: -10px;
+    }
+
+    .float:nth-child(3) {
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .about-content {
@@ -698,8 +737,17 @@ footer {
 
     .glass-container {
         flex-direction: column;
-        gap: 2rem;
+        gap: 2.5rem;
         padding: 2rem;
+    }
+
+    .projects-grid,
+    .skills-grid {
+        gap: 2.5rem;
+    }
+
+    .timeline-item {
+        margin-bottom: 3rem;
     }
 
     .gallery-grid {
@@ -710,6 +758,26 @@ footer {
     .back-nav {
         left: 1rem;
         top: 1rem;
+    }
+
+    .section {
+        padding: 6rem 5%;
+    }
+
+    .timeline::before {
+        left: 10px;
+    }
+
+    .timeline-item {
+        margin-left: 30px;
+    }
+
+    .timeline-item::before {
+        left: -28px;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
     }
 }
 
