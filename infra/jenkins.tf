@@ -128,6 +128,16 @@ resource "aws_instance" "jenkins_server" {
               unzip awscliv2.zip
               ./aws/install
 
+              # Docker & Docker Compose
+              apt-get install -y docker.io docker-compose-v2
+              usermod -aG docker ubuntu
+              usermod -aG docker jenkins
+              systemctl restart jenkins
+              apt-get install -y unzip
+              curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+              unzip awscliv2.zip
+              ./aws/install
+
               # Python
               apt-get install -y python3-pip
 
