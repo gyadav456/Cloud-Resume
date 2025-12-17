@@ -165,6 +165,12 @@ resource "aws_lambda_function" "visitor_counter_lambda" {
   }
 }
 
+# Explicitly manage Log Group to enforce retention
+resource "aws_cloudwatch_log_group" "lambda_logs" {
+  name              = "/aws/lambda/${aws_lambda_function.visitor_counter_lambda.function_name}"
+  retention_in_days = 7
+}
+
 # --- API Gateway (HTTP API) ---
 resource "aws_apigatewayv2_api" "http_api" {
   name          = "ResumeAPI"

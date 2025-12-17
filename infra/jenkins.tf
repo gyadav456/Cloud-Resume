@@ -102,53 +102,35 @@ resource "aws_instance" "jenkins_server" {
               swapon /swapfile
               echo '/swapfile none swap sw 0 0' >> /etc/fstab
 
-              # 2. Install Java (Jenkins Requirement)
-              apt-get install -y openjdk-17-jre
-              
-              # 3. Install Jenkins
-              curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
-                /usr/share/keyrings/jenkins-keyring.asc > /dev/null
-              echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
-                https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
-                /etc/apt/sources.list.d/jenkins.list > /dev/null
+              # 2. Install Docker & Build Tools
               apt-get update -y
-              apt-get install -y jenkins
-
-              # 4. Install Build Tools (Terraform, AWS CLI, Python, Docker)
+              apt-get install -y ca-certificates curl gnupg lsb-release
+              mkdir -p /etc/apt/keyrings
+              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+              echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+                $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
               
-              # Terraform
-              apt-get install -y gnupg software-properties-common
-              wget -O- https://apt.releases.hashicorp.com/gpg | \
-                gpg --dearmor | \
-                sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
-              echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
-                https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
-                sudo tee /etc/apt/sources.list.d/hashicorp.list
-              apt-get update
-              apt-get install -y terraform
+              apt-get update -y
+              apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
-              # AWS CLI
-              apt-get install -y unzip
-              curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-              unzip awscliv2.zip
-              ./aws/install
-
-              # Docker & Docker Compose
-              apt-get install -y docker.io docker-compose-v2
+              # 3. Configure Docker Permissions
               usermod -aG docker ubuntu
-              usermod -aG docker jenkins
-              systemctl restart jenkins
-              apt-get install -y unzip
+              chmod 666 /var/run/docker.sock
+
+              # 4. Run Jenkins in Docker
+              docker run -d \
+                --name jenkins \
+                --restart always \
+                -p 8080:8080 -p 50000:50000 \
+                -v jenkins_home:/var/jenkins_home \
+                -v /var/run/docker.sock:/var/run/docker.sock \
+                jenkins/jenkins:lts-jdk17
+
+              # 5. Tools
+              apt-get install -y unzip python3-pip git
               curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
               unzip awscliv2.zip
               ./aws/install
-
-              # Python
-              apt-get install -y python3-pip
-
-              # Start Jenkins
-              systemctl enable jenkins
-              systemctl start jenkins
               EOF
 
   tags = {
