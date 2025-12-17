@@ -28,10 +28,8 @@
         <div class="logo">GY<span class="dot">.</span></div>
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
-            <li><a href="#skills">Skills</a></li>
             <li><a href="#experience">Experience</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#certifications">Certs</a></li>
+            <li><a href="#skills">Expertise</a></li>
             <li><a href="#contact" class="btn-primary">Contact Me</a></li>
         </ul>
         <div class="hamburger">
@@ -51,54 +49,58 @@
                     production incidents, and improving service performance. Skilled in AWS, Kubernetes, and Terraform.
                 </p>
                 <div class="hero-btns fade-in-up delay-3">
-                    <a href="#contact" class="btn-primary">Get in Touch</a>
+                    <a href="#projects" class="btn-primary">View Work</a>
                     <a href="resume.pdf" class="btn-secondary" id="download-btn" download>Download Resume <i
                             class="fas fa-download"></i></a>
                 </div>
+            </div>
 
-                <div class="stats-container fade-in-up delay-4">
-                    <div class="stat-item glass-card small">
-                        <i class="fas fa-eye"></i>
-                        <span id="view-count">Loading...</span>
+            <!-- Hero Visual (Stats + YAML Block) -->
+            <div class="hero-visual fade-in-up delay-2"
+                style="flex-direction: column; align-items: flex-end; gap: 20px;">
+                <!-- Stats Above YAML -->
+                <div class="stats-container" style="margin: 0; align-self: flex-end;">
+                    <div class="stat-item">
+                        <span id="view-count">0</span>
                         <span class="stat-label">Views</span>
                     </div>
-                    <div class="stat-item glass-card small">
-                        <i class="fas fa-file-download"></i>
-                        <span id="download-count">Loading...</span>
+                    <div class="stat-item">
+                        <span id="download-count">0</span>
                         <span class="stat-label">Downloads</span>
                     </div>
                 </div>
 
-                <div class="contact-info-bar fade-in-up delay-4">
-                    <div class="contact-item">
-                        <i class="fas fa-phone-alt"></i>
-                        <span>+91-9896744504</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>gyadav456@gmail.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Gurugram, Haryana</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Abstract decorative element or placeholder for image -->
-            <div class="hero-visual fade-in-up delay-2">
-                <div class="glass-card profile-card">
-                    <div class="card-content">
-                        <div class="code-block">
-                            <span class="keyword">class</span> <span class="class-name">SREngineer</span> {<br>
-                            &nbsp;&nbsp;<span class="keyword">constructor</span>() {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="this">this</span>.name = <span class="string">"Gaurav
-                                Yadav"</span>;<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="this">this</span>.role = <span class="string">"SRE &
-                                DevOps"</span>;<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="this">this</span>.focus = <span
-                                class="string">"Reliability"</span>;<br>
-                            &nbsp;&nbsp;}<br>
-                            }
+                <!-- YAML Block -->
+                <div class="glass-card profile-card"
+                    style="padding: 0; background: transparent; border: none; box-shadow: none; width: 100%;">
+                    <div class="code-block">
+                        <div class="window-controls" style="display: flex; gap: 8px; margin-bottom: 20px;">
+                            <span style="width: 12px; height: 12px; border-radius: 50%; background: #FF5F56;"></span>
+                            <span style="width: 12px; height: 12px; border-radius: 50%; background: #FFBD2E;"></span>
+                            <span style="width: 12px; height: 12px; border-radius: 50%; background: #27C93F;"></span>
+                        </div>
+                        <div>
+                            <span class="keyword">sre_engineer:</span><br>
+                            &nbsp;&nbsp;<span class="class-name">name:</span> <span class="string">"Gaurav
+                                Yadav"</span><br>
+                            &nbsp;&nbsp;<span class="class-name">role:</span> <span class="string">"SRE &
+                                DevOps"</span><br>
+                            &nbsp;&nbsp;<span class="class-name">focus:</span> <span
+                                class="string">"Reliability"</span><br>
+                            &nbsp;&nbsp;<span class="class-name">on_call:</span> <span
+                                class="function">true</span><br><br>
+
+                            &nbsp;&nbsp;<span class="class-name">tools:</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> AWS<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> Kubernetes<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> Datadog<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> Terraform<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> Jenkins<br><br>
+
+                            &nbsp;&nbsp;<span class="class-name">responsibilities:</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> Monitoring<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> Incident response<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> Automation<br>
                         </div>
                     </div>
                 </div>
@@ -120,46 +122,7 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills-section">
-        <div class="container">
-            <h2 class="section-title">Technical <span class="gradient-text">Expertise</span></h2>
-            <div class="skills-grid">
-                <div class="skill-card glass-card">
-                    <div class="icon-box"><i class="fab fa-docker"></i></div>
-                    <h3>DevOps & CI/CD</h3>
-                    <p>Jenkins, Git, Docker, Kubernetes</p>
-                </div>
-                <div class="skill-card glass-card">
-                    <div class="icon-box"><i class="fas fa-code-branch"></i></div>
-                    <h3>Infrastructure as Code</h3>
-                    <p>Terraform, Ansible</p>
-                </div>
-                <div class="skill-card glass-card">
-                    <div class="icon-box"><i class="fab fa-aws"></i></div>
-                    <h3>Cloud Platforms</h3>
-                    <p>AWS (EC2, S3, RDS, VPC, IAM, Load Balancing)</p>
-                </div>
-                <div class="skill-card glass-card">
-                    <div class="icon-box"><i class="fas fa-chart-line"></i></div>
-                    <h3>Observability</h3>
-                    <p>Datadog (APM, Monitors, Dashboards), Prometheus, Grafana</p>
-                </div>
-                <div class="skill-card glass-card">
-                    <div class="icon-box"><i class="fab fa-python"></i></div>
-                    <h3>Scripting</h3>
-                    <p>Python, Bash</p>
-                </div>
-                <div class="skill-card glass-card">
-                    <div class="icon-box"><i class="fas fa-database"></i></div>
-                    <h3>Databases & OS</h3>
-                    <p>SQL, Linux</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
+    <!-- 1. Experience (Requested First) -->
     <section id="experience" class="experience-section">
         <div class="container">
             <h2 class="section-title">Work <span class="gradient-text">Experience</span></h2>
@@ -189,90 +152,6 @@
                             <li>Authored runbooks, incident documentation, and reliability best practices in Confluence;
                                 used JIRA extensively for incident, problem, and change management.</li>
                         </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects-section">
-        <div class="container">
-            <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
-            <div class="projects-grid">
-                <div class="project-card glass-card">
-                    <div class="project-content">
-                        <h3>Kubernetes Deployment & Observability</h3>
-                        <p>Containerised and deployed a scalable microservice app on Kubernetes. Implemented HPA-based
-                            auto-scaling, Helm-based deployments, and integrated Datadog for logs, metrics, and APM to
-                            achieve end-to-end observability.</p>
-                        <div class="tags">
-                            <span>Kubernetes</span><span>Helm</span><span>Datadog</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card glass-card">
-                    <div class="project-content">
-                        <h3>AWS Infrastructure Automation</h3>
-                        <p>Automated provisioning of VPC, EC2, RDS, security groups, and load balancers using Terraform
-                            modules, state locking, and variables; improving consistency and reducing manual effort.</p>
-                        <div class="tags">
-                            <span>Terraform</span><span>AWS</span><span>Automation</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card glass-card">
-                    <div class="project-content">
-                        <h3>CI/CD Pipeline Engineering</h3>
-                        <p>Built a full Jenkins-based CI/CD pipeline using Git, Docker, and AWS. Automated build, test,
-                            and deploy steps; added notification, rollback logic, and validation hooks to improve
-                            deployment reliability.</p>
-                        <div class="tags">
-                            <span>Jenkins</span><span>Docker</span><span>CI/CD</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Education & Certs -->
-    <section id="certifications" class="education-section">
-        <div class="container">
-            <div class="edu-grid">
-                <div class="edu-column">
-                    <h2 class="section-title small">Education</h2>
-                    <div class="edu-card glass-card">
-                        <h3>Bachelor of Technology</h3>
-                        <p class="edu-detail">Mechanical Engineering</p>
-                        <p class="edu-school">BRCM College of Engineering and Technology</p>
-                        <p class="edu-date">2012 - 2016</p>
-                    </div>
-                </div>
-                <div class="edu-column">
-                    <h2 class="section-title small">Certifications</h2>
-                    <div class="cert-list">
-                        <div class="cert-item glass-card">
-                            <i class="fas fa-certificate accent-icon"></i>
-                            <div>
-                                <h3>Certified Kubernetes Administrator (CKA)</h3>
-                                <p>Linux Foundation</p>
-                            </div>
-                        </div>
-                        <div class="cert-item glass-card">
-                            <i class="fab fa-aws accent-icon"></i>
-                            <div>
-                                <h3>AWS Certified CloudOps Engineer - Associate (SOA-C03)</h3>
-                                <p>Amazon Web Services</p>
-                            </div>
-                        </div>
-                        <div class="cert-item glass-card">
-                            <i class="fas fa-code accent-icon"></i>
-                            <div>
-                                <h3>Terraform Associate (004)</h3>
-                                <p>HashiCorp</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -1,15 +1,20 @@
 :root {
-    --bg-color: #050511;
-    --card-bg: rgba(255, 255, 255, 0.03);
-    --card-border: rgba(255, 255, 255, 0.05);
-    --text-primary: #ffffff;
-    --text-secondary: #a0a0b0;
-    --accent-primary: #00f2ff;
-    --accent-secondary: #7000ff;
-    --gradient-main: linear-gradient(135deg, #00f2ff 0%, #7000ff 100%);
-    --font-heading: 'Outfit', sans-serif;
-    --font-body: 'Space Grotesk', sans-serif;
+    --bg-color: #000000;
+    --card-bg: #1d1d1f;
+    --card-border: rgba(255, 255, 255, 0.1);
+    --text-primary: #f5f5f7;
+    --text-secondary: #86868b;
+    --accent-primary: #2997ff;
+    --accent-secondary: #0071e3;
+    --gradient-main: linear-gradient(135deg, #2997ff 0%, #0071e3 100%);
+    --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -26,19 +31,11 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     position: relative;
-    -webkit-font-smoothing: antialiased;
 }
 
-/* Background Animation */
+/* Background - Clean Apple Style (No Globes) */
 .background-globes {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    overflow: hidden;
-    pointer-events: none;
+    display: none;
 }
 
 .globe {
@@ -108,21 +105,23 @@ body {
     font-weight: 700;
 }
 
+/* Apple Card Style (Replaces Glass) */
 .glass-card {
     background: var(--card-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--card-border);
-    border-radius: 16px;
-    padding: 24px;
+    border-radius: 20px;
+    /* Apple-style radius */
+    padding: 30px;
     transition: var(--transition);
+    box-shadow: none;
+    /* Cleaner look */
 }
 
 .glass-card:hover {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.1);
+    background: #2c2c2e;
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px -10px rgba(0, 242, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .section-title {
@@ -130,6 +129,8 @@ body {
     font-size: 2.5rem;
     margin-bottom: 3rem;
     text-align: center;
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
 .section-title.small {
@@ -138,26 +139,29 @@ body {
     margin-bottom: 1.5rem;
 }
 
+/* Buttons - Apple Pill Style */
 .btn-primary,
 .btn-secondary {
     display: inline-block;
-    padding: 12px 32px;
-    border-radius: 50px;
+    padding: 12px 30px;
+    border-radius: 980px;
+    /* Pill shape */
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
     transition: var(--transition);
     font-family: var(--font-heading);
+    font-size: 1rem;
 }
 
 .btn-primary {
-    background: var(--gradient-main);
+    background: var(--accent-primary);
     color: #fff;
-    box-shadow: 0 4px 15px rgba(0, 242, 255, 0.3);
+    border: 1px solid transparent;
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 242, 255, 0.5);
+    background: var(--accent-secondary);
+    transform: scale(1.02);
 }
 
 .btn-secondary {
@@ -346,27 +350,46 @@ body {
     overflow: hidden;
 }
 
+/* Code Block - Terminal Style */
 .code-block {
-    background: #0d0d1b;
-    padding: 20px;
-    border-radius: 12px;
-    font-family: 'Courier New', monospace;
+    font-family: 'Fira Code', 'Courier New', monospace;
     font-size: 0.9rem;
     line-height: 1.6;
-    color: #a0a0b0;
+    color: #a1a1a6;
+    background: #151516;
+    /* Darker terminal bg */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    width: 100%;
 }
 
 .keyword {
-    color: #f07178;
+    color: #ff7b72;
 }
 
-.class-name {
-    color: #ffcb6b;
-}
-
+/* Red/Pink */
 .string {
-    color: #c3e88d;
+    color: #a5d6ff;
 }
+
+/* Light Blue */
+.class-name {
+    color: #d2a8ff;
+}
+
+/* Purple */
+.function {
+    color: #79c0ff;
+}
+
+/* Blue */
+.comment {
+    color: #8b949e;
+}
+
+/* Grey */
 
 .this {
     color: #82aaff;
