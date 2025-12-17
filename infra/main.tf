@@ -298,6 +298,20 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   price_class = "PriceClass_100" # Use only North America and Europe for cheaper cost
 
+  custom_error_response {
+    error_caching_min_ttl = 0
+    error_code            = 403
+    response_code         = 404
+    response_page_path    = "/404.html"
+  }
+
+  custom_error_response {
+    error_caching_min_ttl = 0
+    error_code            = 404
+    response_code         = 404
+    response_page_path    = "/404.html"
+  }
+
   restrictions {
     geo_restriction {
       restriction_type = "none"
