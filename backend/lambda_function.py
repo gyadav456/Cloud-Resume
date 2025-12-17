@@ -51,14 +51,17 @@ def lambda_handler(event, context):
         expression_attribute_values = {':inc': 1}
         
         if action == 'download':
-            update_expression = "ADD downloads :inc"
-        elif action == 'view':
-            update_expression = "ADD views :inc"
+            update_expression = "ADD #d :inc"
+            expression_attribute_names = {'#d': 'downloads'}
+        else:
+            update_expression = "ADD #v :inc"
+            expression_attribute_names = {'#v': 'views'}
             
         # Update specific counter
         response = table.update_item(
             Key={'id': 'stats'},
             UpdateExpression=update_expression,
+            ExpressionAttributeNames=expression_attribute_names,
             ExpressionAttributeValues=expression_attribute_values,
             ReturnValues="UPDATED_NEW"
         )
