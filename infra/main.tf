@@ -8,6 +8,14 @@ terraform {
       source  = "hashicorp/archive"
       version = "~> 2.0"
     }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "~> 4.0"
+    }
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.0"
+    }
   }
 }
 
@@ -175,4 +183,66 @@ output "acm_certificate_validation_records" {
       type   = dvo.resource_record_type
     }
   }
+}
+
+# --- CloudFront (HTTPS Step 2) ---
+
+resource "aws_acm_certificate_validation" "site_cert_validation" {
+  certificate_arn         = aws_acm_certificate.site_cert.arn
+  validation_record_fqdns = [for record in aws_acm_certificate.site_cert.domain_validation_options : record.resource_record_name]
+}
+
+resource "aws_cloudfront_distribution" "s3_distribution" {
+  origin {
+    domain_name = "gauravyadav.site.s3-website.ap-south-1.amazonaws.com"
+    origin_id   = "S3-gauravyadav.site"
+
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "http-only"
+      origin_ssl_protocols   = ["TLSv1.2"]
+    }
+  }
+
+  enabled             = true
+  is_ipv6_enabled     = true
+  default_root_object = "index.html"
+  aliases             = ["gauravyadav.site", "www.gauravyadav.site"]
+
+  default_cache_behavior {
+    allowed_methods  = ["GET", "HEAD"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = "S3-gauravyadav.site"
+
+    forwarded_values {
+      query_string = false
+      cookies {
+        forward = "none"
+      }
+    }
+
+    viewer_protocol_policy = "redirect-to-https"
+    min_ttl                = 0
+    default_ttl            = 3600
+    max_ttl                = 86400
+  }
+
+  price_class = "PriceClass_100" # Use only North America and Europe for cheaper cost
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
+
+  viewer_certificate {
+    acm_certificate_arn      = aws_acm_certificate_validation.site_cert_validation.certificate_arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
+  }
+}
+
+output "cloudfront_domain_name" {
+  value = aws_cloudfront_distribution.s3_distribution.domain_name
 }
