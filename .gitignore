@@ -13,3 +13,8 @@ backend/lambda_function.zip
 
 # Intermediate files
 resume_text.txt
+
+# Security
+*.pem
+*.key
+id_rsa
