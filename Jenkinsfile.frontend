@@ -24,13 +24,11 @@ pipeline {
         }
         
         // Optional: Invalidate CloudFront (if used)
-        /*
         stage('Invalidate Cache') {
             steps {
-                sh "aws cloudfront create-invalidation --distribution-id YOUR_DIST_ID --paths '/*'"
+                sh "aws cloudfront create-invalidation --distribution-id E1W7X3LGWME9LS --paths '/*'"
             }
         }
-        */
     }
 
     post {
