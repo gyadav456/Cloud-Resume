@@ -129,4 +129,26 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCounter('download');
         });
     }
+
+    // --- Gallery Modal Logic ---
+    const galleryBtn = document.getElementById('gallery-btn');
+    const galleryModal = document.getElementById('gallery-modal');
+    const closeModal = document.querySelector('.close-modal');
+
+    if (galleryBtn && galleryModal && closeModal) {
+        galleryBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            galleryModal.style.display = 'block';
+        });
+
+        closeModal.addEventListener('click', () => {
+            galleryModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === galleryModal) {
+                galleryModal.style.display = 'none';
+            }
+        });
+    }
 });
