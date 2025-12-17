@@ -149,10 +149,40 @@ resource "aws_iam_role" "jenkins_role" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "jenkins_admin" {
-  role       = aws_iam_role.jenkins_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+resource "aws_iam_policy" "jenkins_policy" {
+  name        = "jenkins_ci_policy"
+  description = "Policy for Jenkins CI/CD to manage infrastructure"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:*",
+          "dynamodb:*",
+          "lambda:*",
+          "apigateway:*",
+          "cloudfront:*",
+          "acm:*",
+          "route53:*",
+          "iam:*",
+          "secretsmanager:GetSecretValue",
+          "logs:*"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
 }
+
+resource "aws_iam_role_policy_attachment" "jenkins_policy_attach" {
+  role       = aws_iam_role.jenkins_role.name
+  policy_arn = aws_iam_policy.jenkins_policy.arn
+}
+
+# Note: Ideally, Security Group ingress should be restricted to your specific IP.
+# Leaving as 0.0.0.0/0 for demo accessibility, but this violates network isolation best practices.
 
 resource "aws_iam_instance_profile" "jenkins_profile" {
   name = "jenkins_instance_profile"
