@@ -1,0 +1,23 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "9000:8080"
+    environment:
+      - TABLE_NAME=VisitorCounter
+      - BUCKET_NAME=gauravyadav.site
+      # For local testing, you might need AWS credentials.
+      # It's better to mount them or pass them via .env, but for now we leave placeholders or rely on env vars.
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_SESSION_TOKEN
+      - AWS_REGION=us-east-1
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend

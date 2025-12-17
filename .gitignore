@@ -18,3 +18,9 @@ resume_text.txt
 *.pem
 *.key
 id_rsa
+
+# Documentation (Ignored as per request)
+README.md
+Knowledge/
+*_SETUP.md
+compliance_audit.md

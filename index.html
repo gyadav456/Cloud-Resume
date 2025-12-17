@@ -4,337 +4,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gaurav Yadav | SRE & CloudOps Engineer</title>
-    <meta name="description"
-        content="Portfolio and Resume of Gaurav Yadav, a Reliability-driven Site Reliability Engineer skilled in AWS, Kubernetes, and Terraform.">
+    <title>Gaurav Yadav - Cloud Engineer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="background-globes">
-        <div class="globe globe-1"></div>
-        <div class="globe globe-2"></div>
-        <div class="globe globe-3"></div>
-    </div>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
 
-    <!-- Navigation -->
-    <nav class="glass-nav">
-        <div class="logo">GY<span class="dot">.</span></div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#skills">Expertise</a></li>
-            <li><a href="#contact" class="btn-primary">Contact Me</a></li>
-        </ul>
-        <div class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </nav>
+    <header>
+        <nav class="glass-nav">
+            <div class="logo">GY</div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </div>
+        </nav>
+    </header>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-section">
-        <div class="container hero-container">
-            <div class="hero-content">
-                <span class="badge fade-in-up">Site Reliability Engineer</span>
-                <h1 class="fade-in-up delay-1">Hello, I'm <br><span class="gradient-text">Gaurav Yadav</span></h1>
-                <p class="fade-in-up delay-2">Reliability-driven engineer supporting distributed systems, triaging
-                    production incidents, and improving service performance. Skilled in AWS, Kubernetes, and Terraform.
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content fade-in">
+                <span class="greeting">Hello, I'm</span>
+                <h1 class="glitch" data-text="Gaurav Yadav">Gaurav Yadav</h1>
+                <h2 class="typing-text">Cloud Engineer & DevOps Enthusiast</h2>
+                <p class="hero-description">
+                    Architecting scalable cloud solutions and automating infrastructure with modern DevOps practices.
                 </p>
-                <div class="hero-btns fade-in-up delay-3">
-                    <a href="#projects" class="btn-primary">View Work</a>
-                    <a href="resume.pdf" class="btn-secondary" id="download-btn" download>Download Resume <i
-                            class="fas fa-download"></i></a>
-                </div>
-            </div>
-
-            <!-- Hero Visual (Stats + YAML Block) -->
-            <div class="hero-visual fade-in-up delay-2"
-                style="flex-direction: column; align-items: flex-end; gap: 20px;">
-                <!-- Stats Above YAML -->
-                <div class="stats-container" style="margin: 0; align-self: flex-end;">
-                    <div class="stat-item">
-                        <span id="view-count">0</span>
-                        <span class="stat-label">Views</span>
-                    </div>
-                    <div class="stat-item">
-                        <span id="download-count">0</span>
-                        <span class="stat-label">Downloads</span>
-                    </div>
-                </div>
-
-                <!-- YAML Block -->
-                <div class="glass-card profile-card"
-                    style="padding: 0; background: transparent; border: none; box-shadow: none; width: 100%;">
-                    <div class="code-block">
-                        <div class="window-controls" style="display: flex; gap: 8px; margin-bottom: 20px;">
-                            <span style="width: 12px; height: 12px; border-radius: 50%; background: #FF5F56;"></span>
-                            <span style="width: 12px; height: 12px; border-radius: 50%; background: #FFBD2E;"></span>
-                            <span style="width: 12px; height: 12px; border-radius: 50%; background: #27C93F;"></span>
-                        </div>
-                        <div>
-                            <span class="keyword">sre_engineer:</span><br>
-                            &nbsp;&nbsp;<span class="class-name">name:</span> <span class="string">"Gaurav
-                                Yadav"</span><br>
-                            &nbsp;&nbsp;<span class="class-name">role:</span> <span class="string">"SRE &
-                                DevOps"</span><br>
-                            &nbsp;&nbsp;<span class="class-name">focus:</span> <span
-                                class="string">"Reliability"</span><br>
-                            &nbsp;&nbsp;<span class="class-name">on_call:</span> <span
-                                class="function">true</span><br><br>
-
-                            &nbsp;&nbsp;<span class="class-name">tools:</span><br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> AWS<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> Kubernetes<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> Datadog<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> Terraform<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> Jenkins<br><br>
-
-                            &nbsp;&nbsp;<span class="class-name">responsibilities:</span><br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> Monitoring<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> Incident response<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">-</span> Automation<br>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Key Strengths -->
-    <section class="strengths-section">
-        <div class="container">
-            <div class="scrolling-text">
-                <span>Incident Management &bull; Troubleshooting &bull; On-Call Management &bull; Cross-Team
-                    Collaboration &bull; SLOs/SLIs &bull; Error Budgets &bull; MTTR Reduction &bull; RCA & Postmortems
-                    &bull;</span>
-                <span>Incident Management &bull; Troubleshooting &bull; On-Call Management &bull; Cross-Team
-                    Collaboration &bull; SLOs/SLIs &bull; Error Budgets &bull; MTTR Reduction &bull; RCA & Postmortems
-                    &bull;</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- 1. Experience (Requested First) -->
-    <section id="experience" class="experience-section">
-        <div class="container">
-            <h2 class="section-title">Work <span class="gradient-text">Experience</span></h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content glass-card">
-                        <div class="timeline-header">
-                            <div>
-                                <h3>Technical Support Analyst III</h3>
-                                <h4>Cars24 Services Private Limited</h4>
-                            </div>
-                            <span class="timeline-date">April 2022 - October 2025</span>
-                        </div>
-                        <ul class="timeline-list">
-                            <li>Managed production reliability for microservices using Datadog metrics, logs, traces,
-                                dashboards, monitors, and flamegraphs, improving anomaly detection and significantly
-                                reducing MTTR.</li>
-                            <li>Led incident response end-to-end: triage, mitigation, coordination, and deep RCA using
-                                SQL and log analysis, driving long-term fixes aligned with SLOs.</li>
-                            <li>Identified performance bottlenecks and reliability gaps across distributed systems;
-                                collaborated with Engineering and DevOps to deploy preventive fixes.</li>
-                            <li>Developed automation scripts and diagnostic tools in Python/Bash to eliminate repetitive
-                                operational tasks and accelerate root-cause identification.</li>
-                            <li>Improved alerting and escalation workflows, reducing noise and enhancing on-call
-                                efficiency.</li>
-                            <li>Authored runbooks, incident documentation, and reliability best practices in Confluence;
-                                used JIRA extensively for incident, problem, and change management.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 2. Technical Expertise (Skills) -->
-    <section id="skills" class="skills-section">
-        <div class="container">
-            <h2 class="section-title">Technical Expertise</h2>
-            <div class="skills-grid">
-                <div class="skill-card glass-card">
-                    <i class="fab fa-aws accent-icon"></i>
-                    <h3>Cloud Platforms</h3>
-                    <p>AWS (EC2, S3, RDS, VPC, IAM, ELB), Lambda.</p>
-                </div>
-                <div class="skill-card glass-card">
-                    <i class="fas fa-cubes accent-icon"></i>
-                    <h3>DevOps</h3>
-                    <p>Jenkins, Git, Docker, Kubernetes, ArgoCD.</p>
-                </div>
-                <div class="skill-card glass-card">
-                    <i class="fas fa-code accent-icon"></i>
-                    <h3>IaC</h3>
-                    <p>Terraform, Ansible, CloudFormation.</p>
-                </div>
-                <div class="skill-card glass-card">
-                    <i class="fas fa-search accent-icon"></i>
-                    <h3>Observability</h3>
-                    <p>Datadog, Prometheus, Grafana, CloudWatch.</p>
-                </div>
-                <div class="skill-card glass-card">
-                    <i class="fas fa-terminal accent-icon"></i>
-                    <h3>Automation</h3>
-                    <p>Python, Bash Scripting, Lambda Functions.</p>
-                </div>
-                <div class="skill-card glass-card">
-                    <div class="icon-box"><i class="fas fa-database"></i></div>
-                    <h3>Databases & OS</h3>
-                    <p>SQL, Linux Administration, Shell.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. Projects -->
-    <section id="projects" class="projects-section">
-        <div class="container">
-            <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
-            <div class="projects-grid">
-                <div class="project-card glass-card">
-                    <div class="project-content">
-                        <h3>Kubernetes Deployment & Observability</h3>
-                        <p>Containerised and deployed a scalable microservice app on Kubernetes. Implemented HPA-based
-                            auto-scaling, Helm-based deployments, and integrated Datadog for logs, metrics, and APM to
-                            achieve end-to-end observability.</p>
-                        <div class="tags">
-                            <span>Kubernetes</span><span>Helm</span><span>Datadog</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card glass-card">
-                    <div class="project-content">
-                        <h3>AWS Infrastructure Automation</h3>
-                        <p>Automated provisioning of VPC, EC2, RDS, security groups, and load balancers using Terraform
-                            modules, state locking, and variables; improving consistency and reducing manual effort.</p>
-                        <div class="tags">
-                            <span>Terraform</span><span>AWS</span><span>Automation</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card glass-card">
-                    <div class="project-content">
-                        <h3>CI/CD Pipeline Engineering</h3>
-                        <p>Built a full Jenkins-based CI/CD pipeline using Git, Docker, and AWS. Automated build, test,
-                            and deploy steps; added notification, rollback logic, and validation hooks to improve
-                            deployment reliability.</p>
-                        <div class="tags">
-                            <span>Jenkins</span><span>Docker</span><span>CI/CD</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. Education & Certs (Last) -->
-    <section id="certifications" class="education-section">
-        <div class="container">
-            <div class="edu-grid">
-                <div class="edu-column">
-                    <h2 class="section-title small">Education</h2>
-                    <div class="edu-card glass-card">
-                        <h3>Bachelor of Technology</h3>
-                        <p class="edu-detail">Mechanical Engineering</p>
-                        <p class="edu-school">BRCM College of Engineering and Technology</p>
-                        <p class="edu-date">2012 - 2016</p>
-                    </div>
-                </div>
-                <div class="edu-column">
-                    <h2 class="section-title small">Certifications</h2>
-                    <div class="cert-list">
-                        <div class="cert-item glass-card">
-                            <i class="fas fa-certificate accent-icon"></i>
-                            <div>
-                                <h3>Certified Kubernetes Administrator (CKA)</h3>
-                                <p>Linux Foundation</p>
-                            </div>
-                        </div>
-                        <div class="cert-item glass-card">
-                            <i class="fab fa-aws accent-icon"></i>
-                            <div>
-                                <h3>AWS Certified CloudOps Engineer - Associate (SOA-C03)</h3>
-                                <p>Amazon Web Services</p>
-                            </div>
-                        </div>
-                        <div class="cert-item glass-card">
-                            <i class="fas fa-code accent-icon"></i>
-                            <div>
-                                <h3>Terraform Associate (004)</h3>
-                                <p>HashiCorp</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <div class="contact-wrapper glass-card">
-                <div class="contact-text">
-                    <h2>Let's <span class="gradient-text">Connect</span></h2>
-                    <p>Open to opportunities in SRE, DevOps, and Cloud Infrastructure. Feel free to reach out!</p>
-                    <a href="mailto:gyadav456@gmail.com" class="email-link">gyadav456@gmail.com</a>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">Get in Touch</a>
+                    <a href="#projects" class="btn btn-secondary">View Work</a>
+                    <a href="#" id="download-resume-btn" class="btn btn-secondary"><i class="fas fa-download"></i>
+                        Resize Resume</a>
                 </div>
                 <div class="social-links">
-                    <a href="https://github.com/gyadav456/Cloud-Resume" target="_blank" class="social-btn"><i
-                            class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com/in/gaurav-yadav-devops" target="_blank" class="social-btn"><i
-                            class="fab fa-linkedin-in"></i></a>
-                    <a href="status.html" class="social-btn" title="System Status"><i class="fas fa-chart-line"></i></a>
-                    <a href="#" id="gallery-btn" class="social-btn" title="Photo Gallery"><i
-                            class="fas fa-camera"></i></a>
+                    <a href="https://github.com/gyadav456" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/gyadav456" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:gyadav456@gmail.com"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
-        </div>
-    </section>
+            <div class="hero-visual">
+                <div class="glass-card float">
+                    <i class="fas fa-cloud"></i>
+                    <span>AWS Certified</span>
+                </div>
+                <div class="glass-card float delay-1">
+                    <i class="fas fa-code"></i>
+                    <span>DevOps</span>
+                </div>
+                <div class="glass-card float delay-2">
+                    <i class="fas fa-server"></i>
+                    <span>Serverless</span>
+                </div>
+            </div>
+        </section>
 
-    <!-- Gallery Modal -->
-    <div id="gallery-modal" class="modal">
-        <div class="modal-content glass-card">
-            <span class="close-modal">&times;</span>
-            <h2 class="section-title small" style="margin-bottom: 20px;">Photography <span
-                    class="gradient-text">Gallery</span></h2>
-            <div class="gallery-grid">
-                <!-- Real S3 Images -->
-                <div class="gallery-item"><img src="https://gauravyadav.site/photos/photo1.jpg" alt="Gallery Photo 1">
+        <section id="stats" class="stats-section">
+            <div class="glass-container">
+                <div class="visitor-counter">
+                    <i class="fas fa-eye"></i>
+                    <span id="visitor-count">Loading...</span>
+                    <p>Total Visitors</p>
                 </div>
-                <div class="gallery-item"><img src="https://gauravyadav.site/photos/photo2.jpg" alt="Gallery Photo 2">
+                <!-- Added Download Counter -->
+                <div class="visitor-counter">
+                    <i class="fas fa-download"></i>
+                    <span id="download-count">Loading...</span>
+                    <p>Resume Downloads</p>
                 </div>
-                <!-- Placeholders for future photos -->
-                <div class="gallery-item"><img src="https://via.placeholder.com/400x300/1d1d1f/86868b?text=Photo+3"
-                        alt="Gallery Photo 3"></div>
-                <div class="gallery-item"><img src="https://via.placeholder.com/400x300/1d1d1f/86868b?text=Photo+4"
-                        alt="Gallery Photo 4"></div>
-                <div class="gallery-item"><img src="https://via.placeholder.com/400x300/1d1d1f/86868b?text=Photo+5"
-                        alt="Gallery Photo 5"></div>
-                <div class="gallery-item"><img src="https://via.placeholder.com/400x300/1d1d1f/86868b?text=Photo+6"
-                        alt="Gallery Photo 6"></div>
+            </div>
+            <div class="status-indicator">
+                <span class="dot"></span>
+                <p>System Operational</p>
+            </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-image glass-card">
+                    <!-- Placeholder for profile image -->
+                    <div class="profile-placeholder">
+                        <i class="fas fa-user-astronaut"></i>
+                    </div>
+                </div>
+                <div class="about-text glass-card">
+                    <p>
+                        I am a passionate Cloud Engineer with a deep focus on AWS, Infrastructure as Code (IaC), and
+                        CI/CD automation.
+                        My journey began with traditional system administration and evolved into mastering the
+                        cloud-native landscape.
+                    </p>
+                    <p>
+                        I believe in the power of automation to solve complex problems. Whether it's architecting
+                        serverless applications
+                        or building resilient Kubernetes clusters, I strive for efficiency, security, and scalability in
+                        every project.
+                    </p>
+                    <div class="certifications">
+                        <div class="cert-badge">
+                            <i class="fab fa-aws"></i>
+                            <span>AWS Solutions Architect</span>
+                        </div>
+                        <div class="cert-badge">
+                            <i class="fas fa-layer-group"></i>
+                            <span>Terraform Associate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category glass-card">
+                    <h3><i class="fab fa-aws"></i> Cloud & Infra</h3>
+                    <div class="tags">
+                        <span>AWS (EC2, S3, Lambda, VPC)</span>
+                        <span>Terraform</span>
+                        <span>CloudFormation</span>
+                        <span>Docker</span>
+                        <span>Kubernetes</span>
+                    </div>
+                </div>
+                <div class="skill-category glass-card">
+                    <h3><i class="fas fa-infinity"></i> DevOps & CI/CD</h3>
+                    <div class="tags">
+                        <span>Jenkins</span>
+                        <span>GitHub Actions</span>
+                        <span>Git</span>
+                        <span>Ansible</span>
+                        <span>Linux Administration</span>
+                    </div>
+                </div>
+                <div class="skill-category glass-card">
+                    <h3><i class="fas fa-code"></i> Development</h3>
+                    <div class="tags">
+                        <span>Python</span>
+                        <span>Bash Scripting</span>
+                        <span>HTML/CSS</span>
+                        <span>JavaScript</span>
+                        <span>SQL</span>
+                    </div>
+                </div>
+                <div class="skill-category glass-card">
+                    <h3><i class="fas fa-chart-line"></i> Observability</h3>
+                    <div class="tags">
+                        <span>CloudWatch</span>
+                        <span>Prometheus</span>
+                        <span>Grafana</span>
+                        <span>ELK Stack</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card glass-card">
+                    <div class="project-header">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Cloud Resume Challenge</h3>
+                    </div>
+                    <p>A serverless resume website hosted on AWS S3 & CloudFront, utilizing Lambda & DynamoDB for
+                        visitor tracking, fully automated with Terraform & Github Actions.</p>
+                    <div class="project-tech">
+                        <span>AWS</span>
+                        <span>Terraform</span>
+                        <span>Python</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="btn-sm"><i class="fab fa-github"></i> Code</a>
+                        <!-- Added Gallery Button -->
+                        <button id="gallery-btn" class="btn-sm modal-trigger"><i class="fas fa-images"></i>
+                            Gallery</button>
+                    </div>
+                </div>
+
+                <div class="project-card glass-card">
+                    <div class="project-header">
+                        <i class="fas fa-network-wired"></i>
+                        <h3>3-Tier Architecture</h3>
+                    </div>
+                    <p>Designed and deployed a highly available, fault-tolerant 3-tier web architecture on AWS using
+                        EC2, ALB, and RDS with auto-scaling capabilities.</p>
+                    <div class="project-tech">
+                        <span>VPC</span>
+                        <span>EC2</span>
+                        <span>RDS</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="btn-sm"><i class="fab fa-github"></i> Code</a>
+                    </div>
+                </div>
+
+                <div class="project-card glass-card">
+                    <div class="project-header">
+                        <i class="fas fa-project-diagram"></i>
+                        <h3>Kubernetes Cluster Ops</h3>
+                    </div>
+                    <p>Automated the provisioning and management of an EKS cluster using Terraform and Helm,
+                        implementing ArgoCD for GitOps deployment workflows.</p>
+                    <div class="project-tech">
+                        <span>EKS</span>
+                        <span>Helm</span>
+                        <span>ArgoCD</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="btn-sm"><i class="fab fa-github"></i> Code</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Modal -->
+        <div id="gallery-modal" class="modal">
+            <div class="modal-content glass-card">
+                <span class="close-modal">&times;</span>
+                <h2>Project Gallery</h2>
+                <div class="gallery-grid" id="gallery-grid">
+                    <!-- Images will be populated dynamically -->
+                    <div class="gallery-loader">Loading...</div>
+                </div>
             </div>
         </div>
-    </div>
+
+        <section id="experience" class="section">
+            <h2 class="section-title">Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item glass-card">
+                    <div class="timeline-date">2023 - Present</div>
+                    <div class="timeline-content">
+                        <h3>Cloud Engineer</h3>
+                        <h4>Org Name</h4>
+                        <p>Leading cloud migration initiatives and optimizing infrastructure costs. Implemented CI/CD
+                            pipelines reducing deployment time by 40%.</p>
+                    </div>
+                </div>
+                <div class="timeline-item glass-card">
+                    <div class="timeline-date">2021 - 2023</div>
+                    <div class="timeline-content">
+                        <h3>DevOps Intern</h3>
+                        <h4>Org Name</h4>
+                        <p>Assisted in automating server provisioning scripts and monitoring system health using Nagios
+                            and Grafana.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-container glass-card">
+                <p>Always open to discussing new opportunities, cloud technologies, or just having a chat about the
+                    latest in tech.</p>
+                <a href="mailto:gyadav456@gmail.com" class="btn btn-primary big-btn">Say Hello <i
+                        class="fas fa-paper-plane"></i></a>
+            </div>
+        </section>
+    </main>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2025 Gaurav Yadav. Built with standard web technologies.</p>
+        <div class="glass-footer">
+            <p>&copy; 2024 Gaurav Yadav. Built with <i class="fas fa-heart"></i> and AWS.</p>
+            <p class="footer-links">
+                <a href="status.html">System Status</a>
+            </p>
         </div>
     </footer>
 
-    <!-- CI Test Trigger -->
     <script src="script.js"></script>
 </body>
 

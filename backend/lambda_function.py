@@ -75,7 +75,7 @@ def lambda_handler(event, context):
                     'headers': headers,
                     'body': json.dumps({'error': 'Failed to fetch gallery images'})
                 }
-                }
+
 
         # --- GET /metrics: Fetch CloudWatch Stats ---
         if route_key == 'GET /metrics' or path == '/metrics':

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Status | Cloud Resume</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .status-container {
+            max-width: 1200px;
+            margin: 120px auto;
+            padding: 20px;
+        }
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .chart-card {
+            background: rgba(255, 255, 255, 0.05); /* Same as your glass card */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        h2 { text-align: center; color: white; }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Consistent Nav -->
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <div class="logo">Gaurav Yadav</div>
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+        </div>
+    </nav>
+
+    <div class="status-container">
+        <h1 class="section-title">System Status (Live)</h1>
+        <p style="text-align: center; color: #aaa;">Real-time metrics from AWS CloudWatch (Last 24 Hours)</p>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h2>Api Traffic (Invocations)</h2>
+                <canvas id="trafficChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h2>Backend Latency (ms)</h2>
+                <canvas id="latencyChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Use the same API endpoint logic as script.js
+        const API_BASE = 'https://970sm9mib1.execute-api.us-east-1.amazonaws.com'; // Hardcoded for simplicity/speed
+        const METRICS_ENDPOINT = `${API_BASE}/metrics`;
+
+        async function fetchMetrics() {
+            try {
+                const response = await fetch(METRICS_ENDPOINT);
+                const data = await response.json();
+                
+                renderCharts(data);
+            } catch (error) {
+                console.error('Failed to fetch metrics:', error);
+            }
+        }
+
+        function renderCharts(data) {
+            // Process Invocations
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            new Chart(trafficCtx, {
+                type: 'line',
+                data: {
+                    labels: data.invocations.map(d => new Date(d.Timestamp).toLocaleTimeString()),
+                    datasets: [{
+                        label: 'Requests per Hour',
+                        data: data.invocations.map(d => d.Sum),
+                        borderColor: '#0071e3', // Apple Blue
+                        backgroundColor: 'rgba(0, 113, 227, 0.2)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { labels: { color: 'white' } } },
+                    scales: {
+                        y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#aaa' } },
+                        x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#aaa' } }
+                    }
+                }
+            });
+
+            // Process Latency
+            const latencyCtx = document.getElementById('latencyChart').getContext('2d');
+            new Chart(latencyCtx, {
+                type: 'line',
+                data: {
+                    labels: data.latency.map(d => new Date(d.Timestamp).toLocaleTimeString()),
+                    datasets: [{
+                        label: 'Avg Duration (ms)',
+                        data: data.latency.map(d => d.Average),
+                        borderColor: '#34c759', // Apple Green
+                        backgroundColor: 'rgba(52, 199, 89, 0.2)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { labels: { color: 'white' } } },
+                    scales: {
+                        y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#aaa' } },
+                        x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#aaa' } }
+                    }
+                }
+            });
+        }
+
+        fetchMetrics();
+    </script>
+</body>
+</html>
