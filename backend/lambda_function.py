@@ -2,6 +2,7 @@ import json
 import boto3
 import os
 from decimal import Decimal
+from datetime import datetime, timedelta
 
 # Initialize DynamoDB client
 dynamodb = boto3.resource('dynamodb')
@@ -11,6 +12,10 @@ table = dynamodb.Table(TABLE_NAME)
 # Initialize S3 client
 s3 = boto3.client('s3')
 BUCKET_NAME = os.environ.get('BUCKET_NAME', 'gauravyadav.site')
+
+# Initialize CloudWatch client
+cloudwatch = boto3.client('cloudwatch')
+
 
 # Helper class to convert DynamoDB Decimal to float/int for JSON serialization
 class DecimalEncoder(json.JSONEncoder):
@@ -69,6 +74,63 @@ def lambda_handler(event, context):
                     'statusCode': 500,
                     'headers': headers,
                     'body': json.dumps({'error': 'Failed to fetch gallery images'})
+                }
+                }
+
+        # --- GET /metrics: Fetch CloudWatch Stats ---
+        if route_key == 'GET /metrics' or path == '/metrics':
+            try:
+                end_time = datetime.utcnow()
+                start_time = end_time - timedelta(days=1)
+                
+                # Metric 1: Invocations (Traffic)
+                invocations = cloudwatch.get_metric_statistics(
+                    Namespace='AWS/Lambda',
+                    MetricName='Invocations',
+                    Dimensions=[{'Name': 'FunctionName', 'Value': context.function_name}],
+                    StartTime=start_time,
+                    EndTime=end_time,
+                    Period=3600, # 1 Hour buckets
+                    Statistics=['Sum']
+                )
+                
+                # Metric 2: Duration (Latency)
+                latency = cloudwatch.get_metric_statistics(
+                    Namespace='AWS/Lambda',
+                    MetricName='Duration',
+                    Dimensions=[{'Name': 'FunctionName', 'Value': context.function_name}],
+                    StartTime=start_time,
+                    EndTime=end_time,
+                    Period=3600,
+                    Statistics=['Average']
+                )
+                
+                # Sort data points by timestamp
+                def sort_points(points):
+                    return sorted(points, key=lambda x: x['Timestamp'])
+                    
+                data = {
+                    'invocations': sort_points(invocations['Datapoints']),
+                    'latency': sort_points(latency['Datapoints'])
+                }
+
+                # Date serialization helper
+                def json_serial(obj):
+                    if isinstance(obj, datetime):
+                        return obj.isoformat()
+                    raise TypeError ("Type not serializable")
+
+                return {
+                    'statusCode': 200,
+                    'headers': headers,
+                    'body': json.dumps(data, default=json_serial)
+                }
+            except Exception as e:
+                print(f"Metrics Error: {str(e)}")
+                return {
+                    'statusCode': 500,
+                    'headers': headers,
+                    'body': json.dumps({'error': str(e)})
                 }
 
         # --- POST /visitor (or Default): Update Stats ---

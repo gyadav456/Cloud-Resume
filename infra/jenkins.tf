@@ -87,6 +87,11 @@ resource "aws_instance" "jenkins_server" {
   # Ideally, we should scope this down.
   iam_instance_profile = aws_iam_instance_profile.jenkins_profile.name
 
+  root_block_device {
+    volume_size = 20
+    volume_type = "gp3"
+  }
+
   user_data = <<-EOF
               #!/bin/bash
               # 1. Update and Swap Setup (Crucial for t2.micro)
@@ -186,7 +191,8 @@ resource "aws_iam_policy" "jenkins_policy" {
           "route53:*",
           "iam:*",
           "secretsmanager:GetSecretValue",
-          "logs:*"
+          "logs:*",
+          "cloudwatch:*"
         ]
         Resource = "*"
       }
