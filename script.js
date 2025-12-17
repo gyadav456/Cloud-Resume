@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Copy the 'api_endpoint' output URL.
     // 3. Paste it below in API_ENDPOINT.
 
-    const API_ENDPOINT = 'DEMO_MODE'; // e.g., 'https://xyz.execute-api.us-east-1.amazonaws.com/visitor'
+    const API_ENDPOINT = 'https://970sm9mib1.execute-api.us-east-1.amazonaws.com/visitor'; // Real Backend
 
     const viewCountEl = document.getElementById('view-count');
     const downloadCountEl = document.getElementById('download-count');

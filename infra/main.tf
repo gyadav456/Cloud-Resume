@@ -150,3 +150,29 @@ resource "aws_lambda_permission" "api_gw" {
 output "api_endpoint" {
   value = "${aws_apigatewayv2_api.http_api.api_endpoint}/visitor"
 }
+
+# --- ACM Certificate (HTTPS Step 1) ---
+resource "aws_acm_certificate" "site_cert" {
+  domain_name       = "gauravyadav.site"
+  validation_method = "DNS"
+
+  subject_alternative_names = ["www.gauravyadav.site"]
+
+  tags = {
+    Project = "CloudResume"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+output "acm_certificate_validation_records" {
+  value = {
+    for dvo in aws_acm_certificate.site_cert.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+}
