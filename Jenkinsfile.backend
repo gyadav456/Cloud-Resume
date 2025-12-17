@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_REGION = 'us-east-1' // Terraform config uses us-east-1
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'pip install -r backend/requirements.txt'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh 'python3 backend/test_lambda_function.py'
+            }
+        }
+
+        stage('Deploy Infrastructure') {
+            steps {
+                dir('infra') {
+                    // Initialize Terraform
+                    sh 'terraform init'
+                    
+                    // Apply changes (Auto-approve for CI/CD)
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Backend deployment successful!'
+        }
+        failure {
+            echo 'Backend deployment failed.'
+        }
+    }
+}

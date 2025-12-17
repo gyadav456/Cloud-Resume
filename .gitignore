@@ -1,0 +1,15 @@
+# OS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+backend/lambda_function.zip
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Intermediate files
+resume_text.txt
