@@ -71,6 +71,7 @@ resource "aws_iam_role_policy_attachment" "lambda_policy" {
 }
 
 # Attach DynamoDB access policy
+# Attach DynamoDB access policy
 resource "aws_iam_policy" "dynamodb_access" {
   name        = "ResumeDynamoDBAccess"
   description = "Allow Lambda to read/write to VisitorCounter table"
@@ -91,9 +92,33 @@ resource "aws_iam_policy" "dynamodb_access" {
   })
 }
 
+# Attach S3 List access policy
+resource "aws_iam_policy" "s3_list_access" {
+  name        = "ResumeS3ListAccess"
+  description = "Allow Lambda to list objects in the S3 bucket"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "s3:ListBucket"
+        ]
+        Effect   = "Allow"
+        Resource = "arn:aws:s3:::gauravyadav.site"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role_policy_attachment" "attach_dynamodb_policy" {
   role       = aws_iam_role.lambda_exec.name
   policy_arn = aws_iam_policy.dynamodb_access.arn
+}
+
+resource "aws_iam_role_policy_attachment" "attach_s3_policy" {
+  role       = aws_iam_role.lambda_exec.name
+  policy_arn = aws_iam_policy.s3_list_access.arn
 }
 
 resource "aws_lambda_function" "visitor_counter_lambda" {
@@ -106,7 +131,8 @@ resource "aws_lambda_function" "visitor_counter_lambda" {
 
   environment {
     variables = {
-      TABLE_NAME = aws_dynamodb_table.visitor_counter.name
+      TABLE_NAME  = aws_dynamodb_table.visitor_counter.name
+      BUCKET_NAME = "gauravyadav.site"
     }
   }
 }
@@ -145,13 +171,20 @@ resource "aws_apigatewayv2_route" "visitor_route" {
   target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
 }
 
+# Route for GET /gallery
+resource "aws_apigatewayv2_route" "gallery_route" {
+  api_id    = aws_apigatewayv2_api.http_api.id
+  route_key = "GET /gallery"
+  target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
+}
+
 # Permission for API Gateway to invoke Lambda
 resource "aws_lambda_permission" "api_gw" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.visitor_counter_lambda.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.http_api.execution_arn}/*/*/visitor"
+  source_arn    = "${aws_apigatewayv2_api.http_api.execution_arn}/*/*/*"
 }
 
 # Output the API Endpoint

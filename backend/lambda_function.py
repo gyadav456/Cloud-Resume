@@ -8,6 +8,10 @@ dynamodb = boto3.resource('dynamodb')
 TABLE_NAME = os.environ.get('TABLE_NAME', 'VisitorCounter')
 table = dynamodb.Table(TABLE_NAME)
 
+# Initialize S3 client
+s3 = boto3.client('s3')
+BUCKET_NAME = os.environ.get('BUCKET_NAME', 'gauravyadav.site')
+
 # Helper class to convert DynamoDB Decimal to float/int for JSON serialization
 class DecimalEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -34,7 +38,40 @@ def lambda_handler(event, context):
                 'headers': headers,
                 'body': ''
             }
+            
+        # Route Handling
+        route_key = event.get('routeKey')
+        path = event.get('rawPath')
+        
+        # --- GET /gallery: List S3 Photos ---
+        if route_key == 'GET /gallery' or path == '/gallery':
+            try:
+                response = s3.list_objects_v2(Bucket=BUCKET_NAME, Prefix='photos/')
+                image_urls = []
+                if 'Contents' in response:
+                    for obj in response['Contents']:
+                        key = obj['Key']
+                        # Filter for images and exclude directories
+                        if key.lower().endswith(('.jpg', '.jpeg', '.png', '.webp')) and not key.endswith('/'):
+                            # Construct public URL (assuming bucket is public/cloudfront)
+                            # Using the domain directly as we know it
+                            url = f"https://{BUCKET_NAME}/{key}"
+                            image_urls.append(url)
+                
+                return {
+                    'statusCode': 200,
+                    'headers': headers,
+                    'body': json.dumps({'images': image_urls})
+                }
+            except Exception as e:
+                print(f"S3 Error: {str(e)}")
+                return {
+                    'statusCode': 500,
+                    'headers': headers,
+                    'body': json.dumps({'error': 'Failed to fetch gallery images'})
+                }
 
+        # --- POST /visitor (or Default): Update Stats ---
         body = {}
         if event.get('body'):
             try:
@@ -42,19 +79,18 @@ def lambda_handler(event, context):
             except:
                 pass
 
-        action = body.get('action', 'view') # 'view' or 'download' NOTE: Defaulting to view if simpler GET request
+        action = body.get('action', 'view') # 'view' or 'download'
 
         # Counters are stored in a single item with partition key 'id' = 'stats'
-        # We use atomic updates (ADD) to ensure thread safety
-        
         update_expression = "ADD views :inc"
         expression_attribute_values = {':inc': 1}
+        expression_attribute_names = {'#v': 'views'} # Default
         
         if action == 'download':
             update_expression = "ADD #d :inc"
             expression_attribute_names = {'#d': 'downloads'}
         else:
-            update_expression = "ADD #v :inc"
+            # Default to view
             expression_attribute_names = {'#v': 'views'}
             
         # Update specific counter
@@ -65,12 +101,6 @@ def lambda_handler(event, context):
             ExpressionAttributeValues=expression_attribute_values,
             ReturnValues="UPDATED_NEW"
         )
-        
-        # Determine what to return. 
-        # Ideally we want to return BOTH current counts.
-        # So we do a GetItem to return the full stats state after update, 
-        # or rely on ReturnValues usually meant for just the updated attr.
-        # Let's just fetch the full item to be clean and return total stats.
         
         final_stats = table.get_item(Key={'id': 'stats'})
         item = final_stats.get('Item', {})

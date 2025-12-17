@@ -134,11 +134,55 @@ document.addEventListener('DOMContentLoaded', () => {
     const galleryBtn = document.getElementById('gallery-btn');
     const galleryModal = document.getElementById('gallery-modal');
     const closeModal = document.querySelector('.close-modal');
+    const galleryGrid = document.querySelector('.gallery-grid');
+
+    // Base URL derivation: The visitor endpoint ends with /visitor. We want /gallery.
+    // Assuming API_ENDPOINT is '.../visitor', we replace '/visitor' with '/gallery'
+    const GALLERY_ENDPOINT = API_ENDPOINT.replace('/visitor', '/gallery');
+
+    async function loadGalleryImages() {
+        if (!API_ENDPOINT.startsWith('http')) return; // No backend in demo mode
+
+        try {
+            // Show loading state or keep placeholders initially?
+            // Let's clear and show loading spinner or text
+            galleryGrid.innerHTML = '<p style="color:white; text-align:center; grid-column: 1/-1;">Loading photos...</p>';
+
+            const response = await fetch(GALLERY_ENDPOINT, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (!response.ok) throw new Error('Failed to fetch images');
+
+            const data = await response.json();
+
+            if (data.images && data.images.length > 0) {
+                galleryGrid.innerHTML = ''; // Clear loading/placeholder
+                data.images.forEach(url => {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.alt = 'Gallery Photo';
+                    img.loading = 'lazy';
+                    item.appendChild(img);
+                    galleryGrid.appendChild(item);
+                });
+            } else {
+                galleryGrid.innerHTML = '<p style="color:white; text-align:center; grid-column: 1/-1;">No photos found.</p>';
+            }
+        } catch (error) {
+            console.error('Gallery Error:', error);
+            galleryGrid.innerHTML = '<p style="color:red; text-align:center; grid-column: 1/-1;">Error loading photos.</p>';
+        }
+    }
 
     if (galleryBtn && galleryModal && closeModal) {
         galleryBtn.addEventListener('click', (e) => {
             e.preventDefault();
             galleryModal.style.display = 'block';
+            loadGalleryImages(); // Fetch on open
         });
 
         closeModal.addEventListener('click', () => {
