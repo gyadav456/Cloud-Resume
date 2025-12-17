@@ -110,7 +110,20 @@ resource "aws_iam_policy" "s3_list_access" {
           "s3:ListBucket"
         ]
         Effect   = "Allow"
-        Resource = "arn:aws:s3:::gauravyadav.site"
+        Resource = [
+          "arn:aws:s3:::gauravyadav.site",
+          "arn:aws:s3:::g2u7a8.photos"
+        ]
+      },
+      {
+        Action = [
+          "s3:GetObject"
+        ]
+        Effect   = "Allow"
+        Resource = [
+          "arn:aws:s3:::gauravyadav.site/*",
+          "arn:aws:s3:::g2u7a8.photos/*"
+        ]
       }
     ]
   })
@@ -156,11 +169,15 @@ resource "aws_lambda_function" "visitor_counter_lambda" {
   handler          = "lambda_function.lambda_handler"
   runtime          = "python3.9"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  
+  memory_size = 1024
+  timeout     = 30
 
   environment {
     variables = {
-      TABLE_NAME  = aws_dynamodb_table.visitor_counter.name
-      BUCKET_NAME = "gauravyadav.site"
+      TABLE_NAME          = aws_dynamodb_table.visitor_counter.name
+      BUCKET_NAME         = "gauravyadav.site"
+      GALLERY_BUCKET_NAME = "g2u7a8.photos"
     }
   }
 }

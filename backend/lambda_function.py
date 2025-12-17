@@ -51,17 +51,28 @@ def lambda_handler(event, context):
         # --- GET /gallery: List S3 Photos ---
         if route_key == 'GET /gallery' or path == '/gallery':
             try:
-                response = s3.list_objects_v2(Bucket=BUCKET_NAME, Prefix='photos/')
+                gallery_bucket = os.environ.get('GALLERY_BUCKET_NAME', BUCKET_NAME) # Use dedicated bucket if set
+                
+                # IMPORTANT: Gallery bucket is in ap-south-1. Lambda is in us-east-1.
+                # We must use a regional client to sign the URL correctly.
+                s3_gallery = boto3.client('s3', region_name='ap-south-1')
+                
+                response = s3_gallery.list_objects_v2(Bucket=gallery_bucket) # List root of gallery bucket
                 image_urls = []
                 if 'Contents' in response:
                     for obj in response['Contents']:
                         key = obj['Key']
                         # Filter for images and exclude directories
                         if key.lower().endswith(('.jpg', '.jpeg', '.png', '.webp')) and not key.endswith('/'):
-                            # Construct public URL (assuming bucket is public/cloudfront)
-                            # Using the domain directly as we know it
-                            url = f"https://{BUCKET_NAME}/{key}"
-                            image_urls.append(url)
+                            # Generate Presigned URL (works even if bucket is private)
+                            try:
+                                url = s3_gallery.generate_presigned_url('get_object',
+                                                                Params={'Bucket': gallery_bucket,
+                                                                        'Key': key},
+                                                                ExpiresIn=3600) # 1 Hour expiry
+                                image_urls.append(url)
+                            except Exception as e:
+                                print(f"Error generating presigned url for {key}: {str(e)}")
                 
                 return {
                     'statusCode': 200,
@@ -143,38 +154,42 @@ def lambda_handler(event, context):
 
         action = body.get('action', 'view') # 'view' or 'download'
 
-        # Counters are stored in a single item with partition key 'id' = 'stats'
-        update_expression = "ADD views :inc"
-        expression_attribute_values = {':inc': 1}
-        expression_attribute_names = {'#v': 'views'} # Default
-        
         if action == 'download':
-            update_expression = "ADD #d :inc"
+            update_expression = "SET #d = if_not_exists(#d, :start) + :inc"
             expression_attribute_names = {'#d': 'downloads'}
         else:
             # Default to view
+            update_expression = "SET #v = if_not_exists(#v, :start) + :inc"
             expression_attribute_names = {'#v': 'views'}
-            
-        # Update specific counter
+
         response = table.update_item(
-            Key={'id': 'stats'},
+            Key={'id': 'visitor_stats'},
             UpdateExpression=update_expression,
             ExpressionAttributeNames=expression_attribute_names,
-            ExpressionAttributeValues=expression_attribute_values,
+            ExpressionAttributeValues={
+                ':inc': 1,
+                ':start': 0
+            },
             ReturnValues="UPDATED_NEW"
         )
         
-        final_stats = table.get_item(Key={'id': 'stats'})
-        item = final_stats.get('Item', {})
+        # Now fetch the COMPLETE stats to return to frontend
+        # (Frontend expects { views: X, downloads: Y })
+        final_item = table.get_item(Key={'id': 'visitor_stats'})
+        item = final_item.get('Item', {})
         
-        # Ensure defaults if first run
-        if 'views' not in item: item['views'] = 0
-        if 'downloads' not in item: item['downloads'] = 0
+        views_count = int(item.get('views', item.get('count', 0))) # Fallback to old 'count' if views empty
+        downloads_count = int(item.get('downloads', 0))
+
+
 
         return {
             'statusCode': 200,
             'headers': headers,
-            'body': json.dumps(item, cls=DecimalEncoder)
+            'body': json.dumps({
+                'views': views_count,
+                'downloads': downloads_count
+            }, cls=DecimalEncoder)
         }
 
     except Exception as e:

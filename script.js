@@ -178,59 +178,86 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(style);
 
-    // 6. Gallery Modal Logic
-    const galleryBtn = document.getElementById('gallery-btn');
-    const modal = document.getElementById('gallery-modal');
-    const closeBtn = document.querySelector('.close-modal');
+    // 6. Gallery Logic (Standalone Page)
     const galleryGrid = document.getElementById('gallery-grid');
-    const galleryApiEndpoint = 'https://970sm9mib1.execute-api.us-east-1.amazonaws.com/gallery'; // New Endpoint
+    const galleryApiEndpoint = 'https://970sm9mib1.execute-api.us-east-1.amazonaws.com/gallery';
 
     async function loadGallery() {
+        if (!galleryGrid) return;
+
+        console.log("Starting Gallery Load...");
         galleryGrid.innerHTML = '<div class="gallery-loader">Loading photos...</div>';
         try {
-            const response = await fetch(galleryApiEndpoint);
-            if (!response.ok) throw new Error('API failed');
+            console.log("Fetching: " + galleryApiEndpoint);
+            const response = await fetch(galleryApiEndpoint, { cache: "no-store" });
+            console.log("Response Status:", response.status);
+
+            if (!response.ok) throw new Error('API failed with ' + response.status);
+
             const data = await response.json();
+            console.log("Data received:", data);
 
             galleryGrid.innerHTML = ''; // Clear loader
 
             if (data.images && data.images.length > 0) {
+                // Sort or randomize? Let's just show them.
                 data.images.forEach(url => {
+                    // Create container for hover effects
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'gallery-item';
+
                     const img = document.createElement('img');
                     img.src = url;
-                    img.className = 'gallery-item';
-                    img.alt = 'Project Screenshot';
-                    img.onclick = () => window.open(url, '_blank'); // Open full size on click
-                    galleryGrid.appendChild(img);
+                    img.loading = 'lazy'; // Performance
+                    img.alt = 'Photography';
+
+                    img.onclick = () => window.open(url, '_blank');
+
+                    itemDiv.appendChild(img);
+                    galleryGrid.appendChild(itemDiv);
                 });
             } else {
                 galleryGrid.innerHTML = '<div class="gallery-loader">No photos found in gallery.</div>';
             }
 
         } catch (e) {
-            console.error(e);
-            galleryGrid.innerHTML = '<div class="gallery-loader error">Failed to load images.</div>';
+            console.error("Gallery Load Error:", e);
+            galleryGrid.innerHTML = '<div class="gallery-loader error">Failed to load images: ' + e.message + '</div>';
         }
     }
 
-    if (galleryBtn) {
-        galleryBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            modal.style.display = 'block';
-            loadGallery(); // Fetch images when opened
-        });
+    // Initialize Gallery if we are on the page
+    if (galleryGrid) {
+        loadGallery();
     }
 
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
+
+    // Mobile Menu Toggle
+    const mobileBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (mobileBtn) {
+        mobileBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile-active');
+            const icon = mobileBtn.querySelector('i');
+            if (navLinks.classList.contains('mobile-active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('mobile-active');
+                const icon = mobileBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
         });
     }
-
-    window.addEventListener('click', (e) => {
-        if (e.target == modal) {
-            modal.style.display = 'none';
-        }
-    });
 
 });
