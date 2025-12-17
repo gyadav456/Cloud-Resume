@@ -3,6 +3,7 @@ import boto3
 import os
 from decimal import Decimal
 from datetime import datetime, timedelta
+from botocore.config import Config
 
 # Initialize DynamoDB client
 dynamodb = boto3.resource('dynamodb')
@@ -55,7 +56,8 @@ def lambda_handler(event, context):
                 
                 # IMPORTANT: Gallery bucket is in ap-south-1. Lambda is in us-east-1.
                 # We must use a regional client to sign the URL correctly.
-                s3_gallery = boto3.client('s3', region_name='ap-south-1')
+                # Explicitly enforce SigV4 which is required for ap-south-1
+                s3_gallery = boto3.client('s3', region_name='ap-south-1', config=Config(signature_version='s3v4'))
                 
                 response = s3_gallery.list_objects_v2(Bucket=gallery_bucket) # List root of gallery bucket
                 image_urls = []
@@ -119,10 +121,33 @@ def lambda_handler(event, context):
                 # Sort data points by timestamp
                 def sort_points(points):
                     return sorted(points, key=lambda x: x['Timestamp'])
+
+                sorted_invocations = sort_points(invocations['Datapoints'])
+                sorted_latency = sort_points(latency['Datapoints'])
+
+                # Calculate Aggregates
+                total_invocations = sum(item['Sum'] for item in sorted_invocations)
+                
+                if sorted_latency:
+                    avg_duration = sum(item['Average'] for item in sorted_latency) / len(sorted_latency)
+                else:
+                    avg_duration = 0.0
                     
+                # Format for Chart (Time Series)
+                # We will return the latency points for the chart
+                chart_data = []
+                for point in sorted_latency:
+                    chart_data.append({
+                        'timestamp': point['Timestamp'].isoformat(),
+                        'value': point['Average']
+                    })
+
                 data = {
-                    'invocations': sort_points(invocations['Datapoints']),
-                    'latency': sort_points(latency['Datapoints'])
+                    'invocations': sorted_invocations, # Raw data if needed
+                    'latency': sorted_latency,         # Raw data if needed
+                    'total_invocations': total_invocations,
+                    'avg_duration': avg_duration,
+                    'chart_data': chart_data
                 }
 
                 # Date serialization helper
