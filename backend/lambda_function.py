@@ -66,15 +66,14 @@ def lambda_handler(event, context):
                         key = obj['Key']
                         # Filter for images and exclude directories
                         if key.lower().endswith(('.jpg', '.jpeg', '.png', '.webp')) and not key.endswith('/'):
-                            # Generate Presigned URL (works even if bucket is private)
+                            # Generate Public URL (Bucket must be public)
+                            # Format: https://{bucket}.s3.{region}.amazonaws.com/{key}
                             try:
-                                url = s3_gallery.generate_presigned_url('get_object',
-                                                                Params={'Bucket': gallery_bucket,
-                                                                        'Key': key},
-                                                                ExpiresIn=3600) # 1 Hour expiry
+                                # Standard S3 Path-Style Public URL format (required for buckets with dots in name to avoid SSL errors)
+                                url = f"https://s3.ap-south-1.amazonaws.com/{gallery_bucket}/{key}"
                                 image_urls.append(url)
                             except Exception as e:
-                                print(f"Error generating presigned url for {key}: {str(e)}")
+                                print(f"Error generating url for {key}: {str(e)}")
                 
                 return {
                     'statusCode': 200,

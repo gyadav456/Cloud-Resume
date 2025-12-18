@@ -25,6 +25,11 @@ terraform {
 }
 
 provider "aws" {
+  region = "ap-south-1"
+}
+
+provider "aws" {
+  alias  = "ue1"
   region = "us-east-1"
 }
 
@@ -252,6 +257,7 @@ output "api_endpoint" {
 
 # --- ACM Certificate (HTTPS Step 1) ---
 resource "aws_acm_certificate" "site_cert" {
+  provider          = aws.ue1
   domain_name       = "gauravyadav.site"
   validation_method = "DNS"
 
@@ -279,6 +285,7 @@ output "acm_certificate_validation_records" {
 # --- CloudFront (HTTPS Step 2) ---
 
 resource "aws_acm_certificate_validation" "site_cert_validation" {
+  provider                = aws.ue1
   certificate_arn         = aws_acm_certificate.site_cert.arn
   validation_record_fqdns = [for record in aws_acm_certificate.site_cert.domain_validation_options : record.resource_record_name]
 }

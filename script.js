@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const visitorCounterElement = document.getElementById('visitor-count');
     const downloadCounterElement = document.getElementById('download-count');
     const downloadBtn = document.getElementById('download-resume-btn');
-    const apiEndpoint = 'https://970sm9mib1.execute-api.us-east-1.amazonaws.com/visitor';
+    const apiEndpoint = 'https://idfx15mrgd.execute-api.ap-south-1.amazonaws.com/visitor';
 
     async function updateCounters() {
         try {
@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Error fetching stats:', error);
-            visitorCounterElement.innerText = '---';
-            downloadCounterElement.innerText = '---';
+            if (visitorCounterElement) visitorCounterElement.innerText = '---';
+            if (downloadCounterElement) downloadCounterElement.innerText = '---';
         }
     }
 
@@ -111,31 +111,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 3. Theme Toggle
+    // 3. Theme Toggle
     const themeToggle = document.querySelector('.theme-toggle');
-    const icon = themeToggle.querySelector('i');
 
-    // Check saved preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        document.body.setAttribute('data-theme', 'light');
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-    }
+    if (themeToggle) {
+        const icon = themeToggle.querySelector('i');
 
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = document.body.getAttribute('data-theme');
-        if (currentTheme === 'light') {
-            document.body.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-        } else {
+        // Check saved preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
             document.body.setAttribute('data-theme', 'light');
-            localStorage.setItem('theme', 'light');
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
+            if (icon) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
         }
-    });
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                document.body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                if (icon) {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            } else {
+                document.body.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                if (icon) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                }
+            }
+        });
+    }
 
     // 4. Smooth Scrolling for Navigation
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -180,13 +190,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 6. Gallery Logic (Standalone Page)
     const galleryGrid = document.getElementById('gallery-grid');
-    const galleryApiEndpoint = 'https://970sm9mib1.execute-api.us-east-1.amazonaws.com/gallery';
+    const galleryApiEndpoint = 'https://idfx15mrgd.execute-api.ap-south-1.amazonaws.com/gallery';
 
     async function loadGallery() {
         if (!galleryGrid) return;
 
         console.log("Starting Gallery Load...");
-        galleryGrid.innerHTML = '<div class="gallery-loader">Loading photos...</div>';
+        galleryGrid.innerHTML = '<div class="gallery-loader">Fetching images...</div>';
         try {
             console.log("Fetching: " + galleryApiEndpoint);
             const response = await fetch(galleryApiEndpoint, { cache: "no-store" });
@@ -212,6 +222,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     img.alt = 'Photography';
 
                     img.onclick = () => window.open(url, '_blank');
+
+                    img.onerror = () => {
+                        console.warn("Failed to load image:", url);
+                        itemDiv.style.display = 'none';
+                    };
 
                     itemDiv.appendChild(img);
                     galleryGrid.appendChild(itemDiv);
@@ -240,12 +255,14 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileBtn.addEventListener('click', () => {
             navLinks.classList.toggle('mobile-active');
             const icon = mobileBtn.querySelector('i');
-            if (navLinks.classList.contains('mobile-active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+            if (icon) {
+                if (navLinks.classList.contains('mobile-active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
             }
         });
 
@@ -260,38 +277,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 7. Status Tooltip Logic
-    const statusIndicator = document.querySelector('.status-indicator');
-    const tooltipLatency = document.getElementById('tooltip-latency');
-    const tooltipRequests = document.getElementById('tooltip-requests');
-    const metricsEndpoint = 'https://970sm9mib1.execute-api.us-east-1.amazonaws.com/metrics';
-    let metricsFetched = false;
 
-    if (statusIndicator) {
-        statusIndicator.addEventListener('mouseenter', async () => {
-            if (metricsFetched) return; // cache for session? or fetch every time? let's fetch if loading not done
-
-            try {
-                const response = await fetch(metricsEndpoint);
-                if (response.ok) {
-                    const data = await response.json();
-
-                    if (tooltipLatency) {
-                        tooltipLatency.innerText = parseFloat(data.avg_duration).toFixed(0) + ' ms';
-                    }
-                    if (tooltipRequests) {
-                        tooltipRequests.innerText = parseInt(data.invocations).toLocaleString();
-                    }
-                    metricsFetched = true; // Avoid spamming API on every hover, optional
-                } else {
-                    throw new Error('API Error');
-                }
-            } catch (error) {
-                console.error('Error fetching metrics:', error);
-                if (tooltipLatency) tooltipLatency.innerText = 'Err';
-                if (tooltipRequests) tooltipRequests.innerText = 'Err';
-            }
-        });
-    }
 
 });
