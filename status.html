@@ -112,14 +112,24 @@
                 const data = await response.json();
 
                 // Update Numbers
-                document.getElementById('invocation-count').innerText = data.invocations.toLocaleString();
-                document.getElementById('latency-val').innerText = data.avg_duration.toFixed(2) + ' ms';
+                if (data.total_invocations !== undefined) {
+                    document.getElementById('invocation-count').innerText = Math.round(data.total_invocations).toLocaleString();
+                } else {
+                    document.getElementById('invocation-count').innerText = "0";
+                }
+
+                if (data.avg_duration !== undefined) {
+                    document.getElementById('latency-val').innerText = data.avg_duration.toFixed(2) + ' ms';
+                } else {
+                    document.getElementById('latency-val').innerText = "0.00 ms";
+                }
+
                 document.getElementById('timestamp').innerText = new Date().toLocaleString();
 
-                // Render Chart (Placeholder - would use historical data in real app)
-                // Since our API currently returns aggregates, we'll confirm functionality by mocking the graph for visual verification of Chart.js
-                // In a full production app, we would fetch TimeSeries data.
-                renderChart(data.avg_duration);
+                // Render Chart with Real Data
+                if (data.chart_data && Array.isArray(data.chart_data)) {
+                    renderChart(data.chart_data);
+                }
 
             } catch (error) {
                 console.error('Error fetching metrics:', error);
@@ -127,13 +137,21 @@
             }
         }
 
-        function renderChart(currentLatency) {
+        function renderChart(chartData) {
             const ctx = document.getElementById('latencyChart').getContext('2d');
 
-            // Mock data variation around average
-            const labels = ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Now'];
-            const base = currentLatency;
-            const dataPoints = labels.map(() => base + (Math.random() * 10 - 5));
+            // Map data for Chart.js
+            // Format time as HH:mm
+            const labels = chartData.map(point => {
+                const date = new Date(point.timestamp);
+                return date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0');
+            });
+
+            const dataPoints = chartData.map(point => point.value);
+
+            // Destroy previous chart if it exists to avoid overlay issues (optional but good practice)
+            // For simplicity in this static file, we'll just create a new one, but ideally we'd track the instance.
+            // Since we only call this once on load, it's fine.
 
             new Chart(ctx, {
                 type: 'line',
