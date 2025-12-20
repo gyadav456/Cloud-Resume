@@ -21,6 +21,10 @@ terraform {
       source  = "hashicorp/local"
       version = "~> 2.0"
     }
+    http = {
+      source  = "hashicorp/http"
+      version = "~> 3.0"
+    }
   }
 }
 
@@ -172,7 +176,7 @@ resource "aws_lambda_function" "visitor_counter_lambda" {
   function_name    = "VisitorCounterFunction"
   role             = aws_iam_role.lambda_exec.arn
   handler          = "lambda_function.lambda_handler"
-  runtime          = "python3.9"
+  runtime          = "python3.12"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
   
   memory_size = 1024

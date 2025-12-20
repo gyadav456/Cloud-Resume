@@ -1,3 +1,8 @@
+# --- Fetch Current Public IP ---
+data "http" "my_ip" {
+  url = "https://api.ipify.org"
+}
+
 # --- Security Group for Jenkins ---
 resource "aws_security_group" "jenkins_sg" {
   name        = "jenkins-security-group"
@@ -8,7 +13,7 @@ resource "aws_security_group" "jenkins_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${chomp(data.http.my_ip.response_body)}/32"]
   }
 
   ingress {
@@ -16,7 +21,7 @@ resource "aws_security_group" "jenkins_sg" {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] 
+    cidr_blocks = ["${chomp(data.http.my_ip.response_body)}/32"] 
   }
 
   egress {
@@ -31,7 +36,7 @@ resource "aws_security_group" "jenkins_sg" {
     from_port   = 3000
     to_port     = 3000
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${chomp(data.http.my_ip.response_body)}/32"]
   }
 
   tags = {

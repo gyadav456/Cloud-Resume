@@ -17,7 +17,7 @@ resource "aws_cloudwatch_dashboard" "resume_dashboard" {
           ]
           view    = "timeSeries"
           stacked = false
-          region  = "us-east-1"
+          region  = "ap-south-1"
           title   = "DynamoDB Capacity"
         }
       },
@@ -35,7 +35,7 @@ resource "aws_cloudwatch_dashboard" "resume_dashboard" {
           ]
           view    = "timeSeries"
           stacked = false
-          region  = "us-east-1"
+          region  = "ap-south-1"
           title   = "API Gateway Latency & Traffic"
         }
       },
@@ -53,7 +53,7 @@ resource "aws_cloudwatch_dashboard" "resume_dashboard" {
           ]
           view    = "timeSeries"
           stacked = false
-          region  = "us-east-1"
+          region  = "ap-south-1"
           title   = "Lambda Invocations & Errors"
         }
       }
