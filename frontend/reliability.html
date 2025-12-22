@@ -201,6 +201,67 @@
         </section>
     </main>
 
+    <!-- Architecture Modal -->
+    <div id="arch-modal" class="modal">
+        <div class="modal-content"
+            style="max-width: 95vw; height: 90vh; display: flex; flex-direction: column; overflow: hidden;">
+            <span class="close-modal">&times;</span>
+            <h2 class="section-title" style="margin-bottom: 20px; font-size: 1.5rem;">Architecture Diagram</h2>
+            <div id="modal-diagram-container"
+                style="flex: 1; overflow: auto; display: flex; justify-content: center; align-items: center; background: rgba(255,255,255,0.02); border-radius: 10px; padding: 20px;">
+                <!-- SVG will be cloned here -->
+            </div>
+            <p style="text-align: center; color: #888; font-size: 0.8rem; margin-top: 10px;">Pinch/Scroll to Zoom & Pan
+                within this window.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Mermaid
+            mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });
+
+            const modal = document.getElementById('arch-modal');
+            const mermaidDiv = document.querySelector('.mermaid');
+            const modalContainer = document.getElementById('modal-diagram-container');
+            const closeBtn = modal.querySelector('.close-modal');
+
+            // Open Modal
+            mermaidDiv.addEventListener('click', () => {
+                // Clone the SVG content
+                const svgContent = mermaidDiv.innerHTML;
+                modalContainer.innerHTML = svgContent;
+
+                // Make SVG responsive in modal
+                const svg = modalContainer.querySelector('svg');
+                if (svg) {
+                    svg.style.width = '100%';
+                    svg.style.height = '100%';
+                    svg.style.maxWidth = 'none';
+                }
+
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Lock background scroll
+            });
+
+            // Close Modal Logic
+            function closeModal() {
+                modal.style.display = 'none';
+                document.body.style.overflow = ''; // Unlock background scroll
+                modalContainer.innerHTML = '';
+            }
+
+            closeBtn.addEventListener('click', closeModal);
+
+            // Close on outside click
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+
     <footer>
         <div class="glass-footer">
             <p>&copy; 2025 Gaurav Yadav. Reliability Engineering Portfolio.</p>
