@@ -5,21 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const downloadBtn = document.getElementById('download-resume-btn');
     const apiEndpoint = 'https://idfx15mrgd.execute-api.ap-south-1.amazonaws.com/visitor';
 
-    // Admin / Ignore Logic
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('admin') === 'true') {
-        localStorage.setItem('ignore_visits', 'true');
-        alert("⚠️ Admin Mode: Visits will now be IGNORED (not counted).");
-    }
-
     async function updateCounters() {
-        if (localStorage.getItem('ignore_visits') === 'true') {
-            console.log("Skipping visitor count (Admin Mode)");
-            if (visitorCounterElement) visitorCounterElement.innerText = "Admin";
-            if (downloadCounterElement) downloadCounterElement.innerText = "Admin";
-            return;
-        }
-
         try {
             // Fetch initial stats (action: 'view' is default if body is empty or just checking)
             // But here we want to increment view on load.
