@@ -1,5 +1,153 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Smooth scrolling for navigation links
+    // 1. Visitor and Download Counter Logic
+    const visitorCounterElement = document.getElementById('visitor-count');
+    const downloadCounterElement = document.getElementById('download-count');
+    const downloadBtn = document.getElementById('download-resume-btn');
+    const apiEndpoint = 'https://idfx15mrgd.execute-api.ap-south-1.amazonaws.com/visitor';
+
+    async function updateCounters() {
+        try {
+            // Fetch initial stats (action: 'view' is default if body is empty or just checking)
+            // But here we want to increment view on load.
+            const response = await fetch(apiEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ action: 'view' })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            // Backend returns { views: <number>, downloads: <number> }
+            animateValue(visitorCounterElement, 0, data.views, 1500);
+            animateValue(downloadCounterElement, 0, data.downloads, 1500);
+
+        } catch (error) {
+            console.error('Error fetching stats:', error);
+            if (visitorCounterElement) visitorCounterElement.innerText = '---';
+            if (downloadCounterElement) downloadCounterElement.innerText = '---';
+        }
+    }
+
+    async function handleDownload(e) {
+        e.preventDefault();
+
+        // 1. Start download immediately
+        const link = document.createElement('a');
+        link.href = 'resume.pdf'; // Relative to index.html in frontend/
+        link.download = 'Gaurav_Yadav_Resume.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // 2. Increment download count
+        try {
+            const response = await fetch(apiEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'download' })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                animateValue(downloadCounterElement, parseInt(downloadCounterElement.innerText) || 0, data.downloads, 500);
+            }
+        } catch (error) {
+            console.error('Error updating download count:', error);
+        }
+    }
+
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', handleDownload);
+    }
+
+    // Number animation utility
+    function animateValue(obj, start, end, duration) {
+        if (!obj) return;
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            obj.innerHTML = Math.floor(progress * (end - start) + start);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    updateCounters();
+
+    // 2. Custom Cursor Follower
+    const cursor = document.querySelector('.cursor');
+    const follower = document.querySelector('.cursor-follower');
+
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+
+        // Add a slight delay for the follower
+        setTimeout(() => {
+            follower.style.left = e.clientX + 'px';
+            follower.style.top = e.clientY + 'px';
+        }, 80);
+    });
+
+    // Cursor effects on hover
+    const links = document.querySelectorAll('a, button');
+    links.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            cursor.style.backgroundColor = 'rgba(88, 166, 255, 0.1)';
+        });
+        link.addEventListener('mouseleave', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            cursor.style.backgroundColor = 'transparent';
+        });
+    });
+
+    // 3. Theme Toggle
+    // 3. Theme Toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+
+    if (themeToggle) {
+        const icon = themeToggle.querySelector('i');
+
+        // Check saved preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.setAttribute('data-theme', 'light');
+            if (icon) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                document.body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                if (icon) {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            } else {
+                document.body.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                if (icon) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                }
+            }
+        });
+    }
+
+    // 4. Smooth Scrolling for Navigation
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -9,28 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Mobile Menu Toggle
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
-
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-
-    // Navbar scroll effect
-    const nav = document.querySelector('nav');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            nav.style.background = 'rgba(5, 5, 17, 0.9)';
-            nav.style.boxShadow = '0 10px 30px -10px rgba(0, 0, 0, 0.5)';
-        } else {
-            nav.style.background = 'rgba(5, 5, 17, 0.7)';
-            nav.style.boxShadow = 'none';
-        }
-    });
-
-    // Intersection Observer for fade-in animations on scroll
+    // 5. Intersection Observer for Fade-in Animation
     const observerOptions = {
         threshold: 0.1
     };
@@ -38,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('fade-in-visible');
+                entry.target.classList.add('visible');
                 observer.unobserve(entry.target);
             }
         });
@@ -51,148 +178,105 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 
-    // Add class for visible state
+    // Add visible class styling dynamically
     const style = document.createElement('style');
     style.innerHTML = `
-        .fade-in-visible {
+        .visible {
             opacity: 1 !important;
             transform: translateY(0) !important;
-        }
-        .nav-links.active {
-            display: flex;
-            flex-direction: column;
-            position: absolute;
-            top: 70px;
-            left: 0;
-            width: 100%;
-            background: #0d0d1b;
-            padding: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
     `;
     document.head.appendChild(style);
 
-    // --- Visitor Counter Logic ---
-    // TO ENABLE REAL BACKEND:
-    // 1. Deploy Terraform infrastructure.
-    // 2. Copy the 'api_endpoint' output URL.
-    // 3. Paste it below in API_ENDPOINT.
+    // 6. Gallery Logic (Standalone Page)
+    const galleryGrid = document.getElementById('gallery-grid');
+    const galleryApiEndpoint = 'https://idfx15mrgd.execute-api.ap-south-1.amazonaws.com/gallery';
 
-    const API_ENDPOINT = 'https://970sm9mib1.execute-api.us-east-1.amazonaws.com/visitor'; // Real Backend
+    async function loadGallery() {
+        if (!galleryGrid) return;
 
-    const viewCountEl = document.getElementById('view-count');
-    const downloadCountEl = document.getElementById('download-count');
-    const downloadBtn = document.getElementById('download-btn');
-
-    async function updateCounter(action = 'view') {
+        console.log("Starting Gallery Load...");
+        galleryGrid.innerHTML = '<div class="gallery-loader">Fetching images...</div>';
         try {
-            if (API_ENDPOINT.startsWith('http')) {
-                // Real Backend Mode
-                const response = await fetch(API_ENDPOINT, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: action })
-                });
-                const data = await response.json();
-                viewCountEl.textContent = data.views;
-                downloadCountEl.textContent = data.downloads;
+            console.log("Fetching: " + galleryApiEndpoint);
+            const response = await fetch(galleryApiEndpoint, { cache: "no-store" });
+            console.log("Response Status:", response.status);
 
-                // Also update local storage as backup/cache if needed, but primarily use API
-            } else {
-                // Demo / LocalStorage Mode
-                if (action === 'view') {
-                    let views = localStorage.getItem('resume_views') || 120;
-                    views = parseInt(views) + 1;
-                    localStorage.setItem('resume_views', views);
-                    viewCountEl.textContent = views;
-
-                    let downloads = localStorage.getItem('resume_downloads') || 45;
-                    downloadCountEl.textContent = downloads;
-                } else if (action === 'download') {
-                    let downloads = parseInt(localStorage.getItem('resume_downloads') || 45);
-                    downloads++;
-                    localStorage.setItem('resume_downloads', downloads);
-                    downloadCountEl.textContent = downloads;
-                }
-            }
-        } catch (error) {
-            console.error('Error updating counter:', error);
-            viewCountEl.textContent = 'Err';
-        }
-    }
-
-    // Initial load - count view
-    updateCounter('view');
-
-    if (downloadBtn) {
-        downloadBtn.addEventListener('click', () => {
-            updateCounter('download');
-        });
-    }
-
-    // --- Gallery Modal Logic ---
-    const galleryBtn = document.getElementById('gallery-btn');
-    const galleryModal = document.getElementById('gallery-modal');
-    const closeModal = document.querySelector('.close-modal');
-    const galleryGrid = document.querySelector('.gallery-grid');
-
-    // Base URL derivation: The visitor endpoint ends with /visitor. We want /gallery.
-    // Assuming API_ENDPOINT is '.../visitor', we replace '/visitor' with '/gallery'
-    const GALLERY_ENDPOINT = API_ENDPOINT.replace('/visitor', '/gallery');
-
-    async function loadGalleryImages() {
-        if (!API_ENDPOINT.startsWith('http')) return; // No backend in demo mode
-
-        try {
-            // Show loading state or keep placeholders initially?
-            // Let's clear and show loading spinner or text
-            galleryGrid.innerHTML = '<p style="color:white; text-align:center; grid-column: 1/-1;">Loading photos...</p>';
-
-            const response = await fetch(GALLERY_ENDPOINT, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-            if (!response.ok) throw new Error('Failed to fetch images');
+            if (!response.ok) throw new Error('API failed with ' + response.status);
 
             const data = await response.json();
+            console.log("Data received:", data);
+
+            galleryGrid.innerHTML = ''; // Clear loader
 
             if (data.images && data.images.length > 0) {
-                galleryGrid.innerHTML = ''; // Clear loading/placeholder
+                // Sort or randomize? Let's just show them.
                 data.images.forEach(url => {
-                    const item = document.createElement('div');
-                    item.className = 'gallery-item';
+                    // Create container for hover effects
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'gallery-item';
+
                     const img = document.createElement('img');
                     img.src = url;
-                    img.alt = 'Gallery Photo';
-                    img.loading = 'lazy';
-                    item.appendChild(img);
-                    galleryGrid.appendChild(item);
+                    img.loading = 'lazy'; // Performance
+                    img.alt = 'Photography';
+
+                    img.onclick = () => window.open(url, '_blank');
+
+                    img.onerror = () => {
+                        console.warn("Failed to load image:", url);
+                        itemDiv.style.display = 'none';
+                    };
+
+                    itemDiv.appendChild(img);
+                    galleryGrid.appendChild(itemDiv);
                 });
             } else {
-                galleryGrid.innerHTML = '<p style="color:white; text-align:center; grid-column: 1/-1;">No photos found.</p>';
+                galleryGrid.innerHTML = '<div class="gallery-loader">No photos found in gallery.</div>';
             }
-        } catch (error) {
-            console.error('Gallery Error:', error);
-            galleryGrid.innerHTML = '<p style="color:red; text-align:center; grid-column: 1/-1;">Error loading photos.</p>';
+
+        } catch (e) {
+            console.error("Gallery Load Error:", e);
+            galleryGrid.innerHTML = '<div class="gallery-loader error">Failed to load images: ' + e.message + '</div>';
         }
     }
 
-    if (galleryBtn && galleryModal && closeModal) {
-        galleryBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            galleryModal.style.display = 'block';
-            loadGalleryImages(); // Fetch on open
-        });
+    // Initialize Gallery if we are on the page
+    if (galleryGrid) {
+        loadGallery();
+    }
 
-        closeModal.addEventListener('click', () => {
-            galleryModal.style.display = 'none';
-        });
 
-        window.addEventListener('click', (e) => {
-            if (e.target === galleryModal) {
-                galleryModal.style.display = 'none';
+    // Mobile Menu Toggle
+    const mobileBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (mobileBtn) {
+        mobileBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile-active');
+            const icon = mobileBtn.querySelector('i');
+            if (icon) {
+                if (navLinks.classList.contains('mobile-active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
             }
         });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('mobile-active');
+                const icon = mobileBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
     }
+
+
+
 });

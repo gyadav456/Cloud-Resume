@@ -4,314 +4,359 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gaurav Yadav | SRE & CloudOps Engineer</title>
-    <meta name="description"
-        content="Portfolio and Resume of Gaurav Yadav, a Reliability-driven Site Reliability Engineer skilled in AWS, Kubernetes, and Terraform.">
+    <title>Gaurav Yadav - DevOps Engineer | Site Reliability Engineer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="background-globes">
-        <div class="globe globe-1"></div>
-        <div class="globe globe-2"></div>
-        <div class="globe globe-3"></div>
-    </div>
-    <div class="noise-overlay"></div>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
 
-    <!-- Apple-style Sticky Nav -->
-    <nav class="glass-nav">
-        <div class="nav-container">
-            <div class="logo">Gaurav Yadav</div>
+    <header>
+        <nav class="glass-nav">
+            <div class="logo">GY</div>
+            <div class="mobile-menu-btn"><i class="fas fa-bars"></i></div>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
                 <li><a href="#experience">Experience</a></li>
-                <li><a href="#projects">Work</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-        </div>
-        <!-- Hamburger removed for cleaner desktop-first Apple look, can re-add if needed -->
-    </nav>
+            <div class="nav-controls" style="display: flex; gap: 15px; align-items: center;">
+                <a href="gallery.html" class="nav-icon" title="Photography Gallery"
+                    style="color: var(--text-color); font-size: 1.2rem; transition: color 0.3s;">
+                    <i class="fas fa-camera-retro"></i>
+                </a>
+                <a href="status.html" class="nav-icon" title="System Status"
+                    style="color: var(--text-color); font-size: 1.2rem; transition: color 0.3s;">
+                    <i class="fas fa-chart-line"></i>
+                </a>
+                <div class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-    <!-- Hybrid Hero: 2 Columns (Text Left, Code Right) -->
-    <section id="home" class="hero-section"
-        style="padding-top: 120px; display: flex; align-items: center; min-height: 90vh;">
-        <div class="container hero-container"
-            style="display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-direction: row; max-width: 1200px;">
-            <div class="hero-content" style="text-align: left; flex: 1;">
-                <span class="fade-in-up"
-                    style="color: #2997ff; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; display: block;">Site
-                    Reliability Engineer</span>
-                <h1 class="hero-title-large fade-in-up delay-1"
-                    style="font-size: 4rem; text-align: left; margin-bottom: 20px;">Hello, I'm <br>Gaurav Yadav</h1>
-                <p class="hero-subtitle fade-in-up delay-2"
-                    style="font-size: 1.1rem; max-width: 600px; margin-bottom: 30px; line-height: 1.6;">
-                    Reliability-driven engineer with 3+ years of experience supporting distributed systems.
-                    Specialized in <strong>AWS, Kubernetes, and Observability</strong> to drive MTTR reduction and
-                    operational excellence.
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content fade-in">
+                <span class="greeting">Hello, I'm</span>
+                <h1 class="glitch" data-text="Gaurav Yadav">Gaurav Yadav</h1>
+                <h2 class="typing-text">Reliability Engineer & DevOps</h2>
+                <p class="hero-description">
+                    Reliability-driven engineer supporting distributed systems, triaging production incidents, and
+                    improving service performance.
+                    Focused on automation, observability, and reducing operational toil.
                 </p>
-                <div class="hero-btns fade-in-up delay-3"
-                    style="justify-content: flex-start; display: flex; gap: 15px;">
-                    <a href="#projects" class="btn-primary">View Work</a>
-                    <a href="resume.pdf" class="btn-primary"
-                        style="background: transparent; color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.3);"
-                        download>Download Resume</a>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">Get in Touch</a>
+                    <a href="#projects" class="btn btn-secondary">View Work</a>
+                    <a href="#" id="download-resume-btn" class="btn btn-secondary"><i class="fas fa-download"></i>
+                        Download Resume</a>
                 </div>
-                <div class="stats-container fade-in-up delay-4"
-                    style="justify-content: flex-start; margin-top: 40px; margin-left: 0;">
-                    <div class="stat-item" style="text-align: left; margin-right: 40px; margin-left: 0;">
-                        <span id="view-count" style="display: block; font-size: 1.5rem; font-weight: 700;">0</span>
-                        <span class="stat-label"
-                            style="font-size: 0.75rem; color: #86868b; text-transform: uppercase;">Views</span>
-                    </div>
-                    <div class="stat-item" style="text-align: left; margin: 0;">
-                        <span id="download-count" style="display: block; font-size: 1.5rem; font-weight: 700;">0</span>
-                        <span class="stat-label"
-                            style="font-size: 0.75rem; color: #86868b; text-transform: uppercase;">Downloads</span>
-                    </div>
+                <div class="social-links">
+                    <a href="https://github.com/gyadav456" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/gyadav456" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:gyadav456@gmail.com"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
-
-            <!-- Right: Code Block Visual (Requested by User) -->
-            <div class="hero-visual fade-in-up delay-2" style="flex: 1; display: flex; justify-content: flex-end;">
-                <div class="code-block"
-                    style="background: #1d1d1f; padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); font-family: 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.6; color: #a1a1a6; box-shadow: 0 20px 40px rgba(0,0,0,0.5); width: 100%; max-width: 500px;">
-                    <div class="window-controls" style="display: flex; gap: 8px; margin-bottom: 20px;">
-                        <span style="width: 12px; height: 12px; border-radius: 50%; background: #FF5F56;"></span>
-                        <span style="width: 12px; height: 12px; border-radius: 50%; background: #FFBD2E;"></span>
-                        <span style="width: 12px; height: 12px; border-radius: 50%; background: #27C93F;"></span>
-                    </div>
-                    <div>
-                        <span style="color: #ff7b72;">sre_engineer:</span><br>
-                        &nbsp;&nbsp;<span style="color: #d2a8ff;">name:</span> <span style="color: #a5d6ff;">"Gaurav
-                            Yadav"</span><br>
-                        &nbsp;&nbsp;<span style="color: #d2a8ff;">role:</span> <span style="color: #a5d6ff;">"SRE &
-                            DevOps"</span><br>
-                        &nbsp;&nbsp;<span style="color: #d2a8ff;">focus:</span> <span
-                            style="color: #a5d6ff;">"Reliability"</span><br>
-                        &nbsp;&nbsp;<span style="color: #d2a8ff;">on_call:</span> <span
-                            style="color: #79c0ff;">true</span><br><br>
-
-                        &nbsp;&nbsp;<span style="color: #d2a8ff;">tools:</span><br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #79c0ff;">-</span> AWS<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #79c0ff;">-</span> Kubernetes<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #79c0ff;">-</span> Datadog<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #79c0ff;">-</span> Terraform<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #79c0ff;">-</span> Jenkins<br><br>
-
-                        &nbsp;&nbsp;<span style="color: #d2a8ff;">responsibilities:</span><br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #79c0ff;">-</span> Monitoring<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #79c0ff;">-</span> Incident response<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #79c0ff;">-</span> Automation<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #79c0ff;">-</span> SLO/SLA management
-                    </div>
+            <div class="hero-visual">
+                <div class="glass-card float">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Reliability</span>
+                </div>
+                <div class="glass-card float delay-1">
+                    <i class="fas fa-cogs"></i>
+                    <span>Automation</span>
+                </div>
+                <div class="glass-card float delay-2">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Observability</span>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Skills Bento Grid (Full Resume Content) -->
-    <section id="skills" class="skills-section">
-        <div class="container">
-            <h2 class="section-title" style="text-align: center; font-size: 2.5rem; margin-bottom: 50px;">Technical
-                Expertise</h2>
-            <div class="bento-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-                <div class="apple-card" style="grid-column: span 2;">
-                    <i class="fab fa-aws" style="font-size: 3rem; color: #FF9900; margin-bottom: 20px;"></i>
-                    <h3 style="font-size: 1.3rem; margin-bottom: 10px;">Cloud Platforms</h3>
-                    <p style="color: #86868b; font-size: 0.95rem;">AWS (EC2, S3, RDS, VPC, IAM, ELB), Lambda.</p>
+        <section id="stats" class="stats-section">
+            <div class="glass-container">
+                <div class="visitor-counter">
+                    <i class="fas fa-eye"></i>
+                    <span id="visitor-count">Loading...</span>
+                    <p>Total Visitors</p>
                 </div>
-                <div class="apple-card">
-                    <i class="fas fa-cubes" style="font-size: 2.5rem; color: #2496ed; margin-bottom: 15px;"></i>
-                    <h3 style="font-size: 1.1rem; margin-bottom: 5px;">DevOps</h3>
-                    <p style="color: #86868b; font-size: 0.9rem;">Jenkins, Git, Docker, Kubernetes</p>
+                <div class="visitor-counter">
+                    <i class="fas fa-download"></i>
+                    <span id="download-count">Loading...</span>
+                    <p>Resume Downloads</p>
                 </div>
-                <div class="apple-card">
-                    <i class="fas fa-code" style="font-size: 2.5rem; color: #7B42BC; margin-bottom: 15px;"></i>
-                    <h3 style="font-size: 1.1rem; margin-bottom: 5px;">IaC</h3>
-                    <p style="color: #86868b; font-size: 0.9rem;">Terraform, Ansible</p>
-                </div>
-                <div class="apple-card">
-                    <i class="fas fa-search" style="font-size: 2.5rem; color: #a371f7; margin-bottom: 15px;"></i>
-                    <h3 style="font-size: 1.1rem; margin-bottom: 5px;">Observability</h3>
-                    <p style="color: #86868b; font-size: 0.9rem;">Datadog, Prometheus, Grafana</p>
-                </div>
-                <div class="apple-card">
-                    <i class="fas fa-terminal" style="font-size: 2.5rem; color: #fff; margin-bottom: 15px;"></i>
-                    <h3 style="font-size: 1.1rem; margin-bottom: 5px;">Automation</h3>
-                    <p style="color: #86868b; font-size: 0.9rem;">Python, Bash Scripting</p>
-                </div>
-                <div class="apple-card">
-                    <i class="fas fa-database" style="font-size: 2.5rem; color: #fff; margin-bottom: 15px;"></i>
-                    <h3 style="font-size: 1.1rem; margin-bottom: 5px;">Databases</h3>
-                    <p style="color: #86868b; font-size: 0.9rem;">SQL, Linux Administration</p>
-                </div>
+                <a href="status.html" class="status-indicator" title="Check System Status">
+                    <span class="dot"></span>
+                    <p>System Status</p>
+                </a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Key Strengths -->
-    <section class="strengths-section">
-        <div class="container">
-            <div class="scrolling-text">
-                <span>Incident Management &bull; Troubleshooting &bull; On-Call Management &bull; Cross-Team
-                    Collaboration &bull; SLOs/SLIs &bull; Error Budgets &bull; MTTR Reduction &bull; RCA & Postmortems
-                    &bull;</span>
-                <span>Incident Management &bull; Troubleshooting &bull; On-Call Management &bull; Cross-Team
-                    Collaboration &bull; SLOs/SLIs &bull; Error Budgets &bull; MTTR Reduction &bull; RCA & Postmortems
-                    &bull;</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section (Compact Grid) -->
-    <section id="projects" class="projects-section" style="padding: 60px 0;">
-        <div class="container">
-            <h2 class="section-title" style="text-align: center; font-size: 2rem; margin-bottom: 40px;">Selected Work
-            </h2>
-            <div class="projects-grid-compact">
-                <div class="apple-card">
-                    <span
-                        style="font-size: 0.75rem; font-weight: 600; color: #2997ff; margin-bottom: 10px; text-transform: uppercase;">Project</span>
-                    <h3 style="font-size: 1.4rem; font-weight: 700; color: #f5f5f7; margin-bottom: 10px;">K8s
-                        Observability</h3>
-                    <p style="color: #86868b; font-size: 0.9rem; line-height: 1.5; margin-bottom: 20px;">Microservices
-                        scaling with HPA and Datadog APM integration.</p>
-                    <div class="tags" style="display: flex; gap: 8px; margin-bottom: 20px;">
-                        <span
-                            style="padding: 4px 10px; background: rgba(255,255,255,0.1); border-radius: 99px; font-size: 0.7rem;">K8s</span>
-                        <span
-                            style="padding: 4px 10px; background: rgba(255,255,255,0.1); border-radius: 99px; font-size: 0.7rem;">Helm</span>
-                    </div>
-                    <a href="#" style="color: #2997ff; font-size: 0.9rem;">View Details ></a>
+        <section id="about" class="section">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-image glass-card">
+                    <img src="profile.jpg" alt="Gaurav Yadav" class="profile-img">
                 </div>
+                <div class="about-text glass-card">
+                    <p>
+                        I am a Reliability-driven engineer with 3+ years of experience supporting distributed systems,
+                        triaging production incidents, and improving service performance.
+                        Skilled in AWS, Kubernetes, Terraform, CI/CD pipelines, and Datadog, with a strong focus on
+                        automation, observability, and reducing operational toil.
+                    </p>
+                    <p>
+                        Proven ability to enhance system reliability, optimize monitoring, drive MTTR reduction, and
+                        collaborate with engineering teams to build resilient, scalable platforms.
+                    </p>
 
-                <div class="apple-card">
-                    <span
-                        style="font-size: 0.75rem; font-weight: 600; color: #2997ff; margin-bottom: 10px; text-transform: uppercase;">Project</span>
-                    <h3 style="font-size: 1.4rem; font-weight: 700; color: #f5f5f7; margin-bottom: 10px;">AWS Automation
-                    </h3>
-                    <p style="color: #86868b; font-size: 0.9rem; line-height: 1.5; margin-bottom: 20px;">Terraform
-                        provisioning for VPC, EC2, and RDS infrastructure.</p>
-                    <div class="tags" style="display: flex; gap: 8px; margin-bottom: 20px;">
-                        <span
-                            style="padding: 4px 10px; background: rgba(255,255,255,0.1); border-radius: 99px; font-size: 0.7rem;">Terraform</span>
-                        <span
-                            style="padding: 4px 10px; background: rgba(255,255,255,0.1); border-radius: 99px; font-size: 0.7rem;">AWS</span>
-                    </div>
-                    <a href="#" style="color: #2997ff; font-size: 0.9rem;">View Details ></a>
-                </div>
-
-                <div class="apple-card">
-                    <span
-                        style="font-size: 0.75rem; font-weight: 600; color: #2997ff; margin-bottom: 10px; text-transform: uppercase;">Project</span>
-                    <h3 style="font-size: 1.4rem; font-weight: 700; color: #f5f5f7; margin-bottom: 10px;">CI/CD Pipeline
-                    </h3>
-                    <p style="color: #86868b; font-size: 0.9rem; line-height: 1.5; margin-bottom: 20px;">Jenkins
-                        pipeline for automated Docker build and deployment.</p>
-                    <div class="tags" style="display: flex; gap: 8px; margin-bottom: 20px;">
-                        <span
-                            style="padding: 4px 10px; background: rgba(255,255,255,0.1); border-radius: 99px; font-size: 0.7rem;">Jenkins</span>
-                        <span
-                            style="padding: 4px 10px; background: rgba(255,255,255,0.1); border-radius: 99px; font-size: 0.7rem;">Docker</span>
-                    </div>
-                    <a href="#" style="color: #2997ff; font-size: 0.9rem;">View Details ></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Timeline (Full Resume Details) -->
-    <section id="experience" class="experience-section" style="padding: 80px 0;">
-        <div class="container">
-            <h2 class="section-title" style="text-align: center; margin-bottom: 60px;">Work Experience</h2>
-            <div class="timeline" style="max-width: 900px; margin: 0 auto; position: relative;">
-                <div class="timeline-item" style="display: flex; gap: 30px;">
-                    <div class="timeline-marker" style="flex-shrink: 0; width: 20px; position: relative;">
-                        <div
-                            style="width: 12px; height: 12px; background: #2997ff; border-radius: 50%; margin-top: 10px;">
+                    <div class="certifications">
+                        <div class="cert-badge">
+                            <i class="fab fa-aws"></i>
+                            <span>AWS Certified CloudOps Associate</span>
                         </div>
-                        <div
-                            style="width: 2px; height: 100%; background: rgba(255,255,255,0.1); margin-left: 5px; margin-top: 10px;">
+                        <div class="cert-badge">
+                            <i class="fas fa-cubes"></i>
+                            <span>CKA (Certified Kubernetes Admin)</span>
+                        </div>
+                        <div class="cert-badge">
+                            <i class="fas fa-code-branch"></i>
+                            <span>HashiCorp Terraform Associate</span>
                         </div>
                     </div>
-                    <div class="apple-card" style="width: 100%; padding: 30px;">
-                        <div class="exp-header"
-                            style="display: flex; justify-content: space-between; margin-bottom: 20px; align-items: baseline;">
-                            <div>
-                                <h3 style="font-size: 1.5rem; font-weight: 700;">Technical Support Analyst III</h3>
-                                <h4 style="color: #2997ff; font-weight: 500;">Cars24 Services Private Limited</h4>
-                            </div>
-                            <span style="color: #86868b; display: block; text-align: right;">April 2022 - Oct
-                                2025</span>
-                        </div>
-                        <ul style="list-style: none; padding: 0; color: #cecece;">
-                            <li style="margin-bottom: 12px;">• <strong>Incident Leadership:</strong> Led end-to-end
-                                incident response (triage, mitigation, RCA, post-mortems) using SQL and log analysis.
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category glass-card">
+                    <h3><i class="fas fa-infinity"></i> DevOps & CI/CD</h3>
+                    <div class="tags">
+                        <span>Jenkins</span>
+                        <span>Git</span>
+                        <span>Docker</span>
+                        <span>Kubernetes</span>
+                    </div>
+                </div>
+                <div class="skill-category glass-card">
+                    <h3><i class="fas fa-layer-group"></i> Infrastructure as Code</h3>
+                    <div class="tags">
+                        <span>Terraform</span>
+                        <span>Ansible</span>
+                    </div>
+                </div>
+                <div class="skill-category glass-card">
+                    <h3><i class="fab fa-aws"></i> Cloud Platforms</h3>
+                    <div class="tags">
+                        <span>AWS (EC2, S3, RDS)</span>
+                        <span>VPC & Networking</span>
+                        <span>IAM & Security</span>
+                        <span>Load Balancing</span>
+                    </div>
+                </div>
+                <div class="skill-category glass-card">
+                    <h3><i class="fas fa-chart-bar"></i> Observability</h3>
+                    <div class="tags">
+                        <span>Datadog (APM, Logs)</span>
+                        <span>Prometheus</span>
+                        <span>Grafana</span>
+                    </div>
+                </div>
+                <div class="skill-category glass-card">
+                    <h3><i class="fas fa-terminal"></i> Scripting & OS</h3>
+                    <div class="tags">
+                        <span>Python</span>
+                        <span>Bash Scripting</span>
+                        <span>Linux Administration</span>
+                        <span>SQL</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="section">
+            <h2 class="section-title">Work Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item glass-card">
+                    <div class="timeline-date">April 2022 - Present</div>
+                    <div class="timeline-content">
+                        <h3>Technical Support Analyst III</h3>
+                        <h4>Cars24 Services Private Limited</h4>
+                        <ul class="experience-list">
+                            <li>Managed production reliability for microservices using Datadog metrics, logs, traces,
+                                and dashboards, improving anomaly detection and significantly reducing MTTR.</li>
+                            <li>Led incident response end-to-end: triage, mitigation, coordination, and deep RCA using
+                                SQL and log analysis, driving long-term fixes aligned with SLOs.</li>
+                            <li>Identified performance bottlenecks and reliability gaps across distributed systems;
+                                collaborated with Engineering and DevOps to deploy preventive fixes.</li>
+                            <li>Developed automation scripts and diagnostic tools in Python/Bash to eliminate repetitive
+                                operational tasks and accelerate root-cause identification.</li>
+                            <li>Improved alerting and escalation workflows, reducing noise and enhancing on-call
+                                efficiency.</li>
+                            <li>Authored runbooks, incident documentation, and reliability best practices in Confluence.
                             </li>
-                            <li style="margin-bottom: 12px;">• <strong>Observability:</strong> Managed production
-                                reliability for microservices using Datadog metrics, logs, traces, and dashboards.</li>
-                            <li style="margin-bottom: 12px;">• <strong>Automation:</strong> Developed Python/Bash
-                                scripts to eliminate repetitive operational tasks and diagnostic tools.</li>
-                            <li style="margin-bottom: 12px;">• <strong>Process Improvement:</strong> Improved alerting
-                                and escalation workflows, reducing on-call noise.</li>
-                            <li style="margin-bottom: 12px;">• <strong>Documentation:</strong> Authored runbooks,
-                                incident docs, and best practices in Confluence/JIRA.</li>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Certifications (Bento Grid Small) -->
-    <section id="certifications" class="education-section" style="padding: 100px 0;">
-        <div class="container">
-            <h2 class="section-title" style="text-align: center; font-size: 2.5rem; margin-bottom: 60px;">Credentials
-            </h2>
-            <div class="bento-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-                <div class="apple-card" style="align-items: center; text-align: center;">
-                    <i class="fab fa-linux" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
-                    <h3 style="font-size: 1.2rem;">CKA Certified</h3>
-                    <p style="color: #86868b; font-size: 0.9rem;">Kubernetes Administrator</p>
+        <section id="education" class="section">
+            <h2 class="section-title">Education</h2>
+            <div class="glass-card education-card">
+                <h3>BRCM College of Engineering and Technology</h3>
+                <p class="edu-date">2012 - 2016</p>
+                <p>Bachelor of Technology</p>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card glass-card">
+                    <div class="project-header">
+                        <i class="fas fa-cubes"></i>
+                        <h3>Kubernetes Deployment & Observability</h3>
+                    </div>
+                    <p>Containerised and deployed a scalable microservice app on Kubernetes. Implemented HPA-based
+                        auto-scaling, Helm-based deployments, and integrated Datadog for logs, metrics, and APM to
+                        achieve end-to-end observability.</p>
+                    <div class="project-tech">
+                        <span>K8s</span>
+                        <span>Helm</span>
+                        <span>Datadog</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/gyadav456/k8s-observability-project" target="_blank"
+                            class="btn-sm"><i class="fab fa-github"></i> Code</a>
+                    </div>
                 </div>
-                <div class="apple-card" style="align-items: center; text-align: center;">
-                    <i class="fab fa-aws" style="font-size: 3rem; color: #FF9900; margin-bottom: 20px;"></i>
-                    <h3 style="font-size: 1.2rem;">AWS Certified</h3>
-                    <p style="color: #86868b; font-size: 0.9rem;">CloudOps Associate (SOA-C03)</p>
+
+                <div class="project-card glass-card">
+                    <div class="project-header">
+                        <i class="fas fa-server"></i>
+                        <h3>AWS Infrastructure Automation</h3>
+                    </div>
+                    <p>Automated provisioning of VPC, EC2, RDS, security groups, and load balancers using Terraform
+                        modules. Implemented state locking and improves consistency reducing manual effort.</p>
+                    <div class="project-tech">
+                        <span>Terraform</span>
+                        <span>AWS</span>
+                        <span>IaC</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/gyadav456/aws-terraform-infrastructure" target="_blank"
+                            class="btn-sm"><i class="fab fa-github"></i> Code</a>
+                    </div>
                 </div>
-                <div class="apple-card" style="align-items: center; text-align: center;">
-                    <i class="fas fa-code" style="font-size: 3rem; color: #7B42BC; margin-bottom: 20px;"></i>
-                    <h3 style="font-size: 1.2rem;">HashiCorp</h3>
-                    <p style="color: #86868b; font-size: 0.9rem;">Terraform Associate (004)</p>
+
+                <div class="project-card glass-card">
+                    <div class="project-header">
+                        <i class="fas fa-pipeline"></i>
+                        <h3>CI/CD Pipeline Engineering</h3>
+                    </div>
+                    <p>Built a full Jenkins-based CI/CD pipeline using Git, Docker, and AWS. Automated build, test, and
+                        deploy steps; added notification, rollback logic, and validation hooks to improve deployment
+                        reliability.</p>
+                    <div class="project-tech">
+                        <span>Jenkins</span>
+                        <span>Docker</span>
+                        <span>Git</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/gyadav456/jenkins-cicd-pipeline" target="_blank" class="btn-sm"><i
+                                class="fab fa-github"></i> Code</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Modal -->
+        <div id="gallery-modal" class="modal">
+            <div class="modal-content glass-card">
+                <span class="close-modal">&times;</span>
+                <h2>Project Gallery</h2>
+                <div class="gallery-grid" id="gallery-grid">
+                    <!-- Images will be populated dynamically -->
+                    <div class="gallery-loader">Loading...</div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Footer / Contact (Apple Compact) -->
-    <footer id="contact" style="padding: 60px 0 40px; text-align: center; border-top: 1px solid #1d1d1f;">
-        <div class="container">
-            <h2 style="font-size: 2rem; margin-bottom: 20px;">Get in Touch.</h2>
-            <p style="font-size: 1.1rem; color: #86868b; margin-bottom: 30px;">Open to SRE & CloudOps opportunities.</p>
-            <a href="mailto:gyadav456@gmail.com" class="btn-primary" style="padding: 12px 30px; font-size: 1rem;">Email
-                Me</a>
-
-            <div class="footer-links" style="margin-top: 50px; display: flex; justify-content: center; gap: 20px;">
-                <a href="#" style="color: #86868b; font-size: 1.2rem;"><i class="fab fa-linkedin"></i></a>
-                <a href="#" style="color: #86868b; font-size: 1.2rem;"><i class="fab fa-github"></i></a>
-                <a href="#" style="color: #86868b; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
+        <section id="contact" class="section">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-container glass-card">
+                <p>Always open to discussing new opportunities, reliability engineering, or just having a chat about
+                    cloud tech.</p>
+                <div class="contact-details">
+                    <p><i class="fas fa-phone"></i> +91-98967 44504</p>
+                    <p><i class="fas fa-envelope"></i> gyadav456@gmail.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Gurugram, Haryana</p>
+                </div>
+                <a href="mailto:gyadav456@gmail.com" class="btn btn-primary big-btn">Say Hello <i
+                        class="fas fa-paper-plane"></i></a>
             </div>
-            <p style="margin-top: 40px; color: #424245; font-size: 0.75rem;">&copy; 2025 Gaurav Yadav.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="glass-footer">
+            <p>&copy; 2025 Gaurav Yadav. Built with <i class="fas fa-heart"></i> and AWS.</p>
+            <p class="footer-links">
+                <a href="status.html">System Status</a>
+            </p>
         </div>
     </footer>
 
     <script src="script.js"></script>
+    <style>
+        .experience-list {
+            text-align: left;
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .experience-list li {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .education-card {
+            text-align: center;
+        }
+
+        .edu-date {
+            color: var(--primary-color);
+            margin: 0.5rem 0;
+            font-weight: 500;
+        }
+
+        .contact-details {
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .contact-details p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
 </body>
 
 </html>
