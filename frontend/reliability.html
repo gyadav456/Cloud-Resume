@@ -13,15 +13,37 @@
 </head>
 <style>
     .mermaid {
+        width: 100%;
+        display: flex;
+        justify-content: center;
         transition: transform 0.3s ease;
         cursor: zoom-in;
-        transform-origin: center;
+        transform-origin: top center;
+    }
+
+    .glass-card:has(.mermaid) {
+        overflow: hidden;
+        /* Keep it contained initially */
+        transition: all 0.3s ease;
+    }
+
+    .glass-card:has(.mermaid):hover {
+        overflow: visible;
+        /* Allow expansion */
+        z-index: 100;
+        transform: scale(1.02);
+        /* Slight lift of card */
     }
 
     .mermaid:hover {
-        transform: scale(1.7);
-        z-index: 1000;
-        position: relative;
+        transform: scale(1.8);
+        /* Stronger zoom */
+        z-index: 101;
+        background: rgba(10, 10, 10, 0.95);
+        /* readable background */
+        border-radius: 10px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        padding: 20px;
     }
 </style>
 
