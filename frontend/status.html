@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,20 +14,28 @@
             margin: 120px auto;
             padding: 20px;
         }
+
         .chart-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
             gap: 30px;
             margin-top: 40px;
         }
+
         .chart-card {
-            background: rgba(255, 255, 255, 0.05); /* Same as your glass card */
+            background: rgba(255, 255, 255, 0.05);
+            /* Same as your glass card */
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 20px;
             backdrop-filter: blur(10px);
         }
-        h2 { text-align: center; color: white; }
+
+        h2 {
+            text-align: center;
+            color: white;
+        }
+
         .back-link {
             display: block;
             text-align: center;
@@ -37,6 +46,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Consistent Nav -->
     <nav class="glass-nav">
@@ -64,14 +74,14 @@
 
     <script>
         // Use the same API endpoint logic as script.js
-        const API_BASE = 'https://970sm9mib1.execute-api.us-east-1.amazonaws.com'; // Hardcoded for simplicity/speed
+        const API_BASE = 'https://idfx15mrgd.execute-api.ap-south-1.amazonaws.com';
         const METRICS_ENDPOINT = `${API_BASE}/metrics`;
 
         async function fetchMetrics() {
             try {
                 const response = await fetch(METRICS_ENDPOINT);
                 const data = await response.json();
-                
+
                 renderCharts(data);
             } catch (error) {
                 console.error('Failed to fetch metrics:', error);
@@ -133,4 +143,5 @@
         fetchMetrics();
     </script>
 </body>
+
 </html>
