@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reliability
+  namespace: default
+  labels:
+    app: reliability
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reliability
+  template:
+    metadata:
+      labels:
+        app: reliability
+    spec:
+      containers:
+      - name: reliability
+        image: ttl.sh/gyadav-reliability:24h
+        env:
+        - name: TARGET_URL
+          value: "http://backend" # K8s Service DNS

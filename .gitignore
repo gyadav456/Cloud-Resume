@@ -15,12 +15,8 @@ backend/lambda_function.zip
 resume_text.txt
 
 # Security
+keys/
 *.pem
 *.key
 id_rsa
 
-# Documentation (Ignored as per request)
-README.md
-Knowledge/
-*_SETUP.md
-compliance_audit.md

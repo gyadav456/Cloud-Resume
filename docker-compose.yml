@@ -1,23 +1,31 @@
+version: '3.8'
+
 services:
   backend:
-    build:
-      context: ./backend
+    build: ./backend
+    image: cloud-resume-backend:local
     ports:
-      - "9000:8080"
+      - "8000:8000"
     environment:
       - TABLE_NAME=VisitorCounter
-      - BUCKET_NAME=gauravyadav.site
-      # For local testing, you might need AWS credentials.
-      # It's better to mount them or pass them via .env, but for now we leave placeholders or rely on env vars.
-      - AWS_ACCESS_KEY_ID
-      - AWS_SECRET_ACCESS_KEY
-      - AWS_SESSION_TOKEN
       - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=testing
+      - AWS_SECRET_ACCESS_KEY=testing
+      # For local dev, we might need AWS creds if it hits real DynamoDB
+      # Or we can mock it. For now, let's see if /health works.
 
   frontend:
-    build:
-      context: ./frontend
+    build: ./frontend
+    image: cloud-resume-frontend:local
     ports:
       - "8080:80"
+    depends_on:
+      - backend
+
+  reliability:
+    build: ./reliability
+    image: cloud-resume-reliability:local
+    environment:
+      - TARGET_URL=http://backend:8000
     depends_on:
       - backend
