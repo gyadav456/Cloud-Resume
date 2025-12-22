@@ -81,6 +81,8 @@ body {
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
+    overflow: visible;
+    /* Ensure nothing is clipped */
 }
 
 .glass-card {
@@ -611,6 +613,9 @@ footer {
 .nav-controls {
     z-index: 2001;
     position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 @media (max-width: 768px) {
