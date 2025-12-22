@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reliability Dashboard | Gaurav Yadav</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+</head>
+<style>
+    .mermaid {
+        transition: transform 0.3s ease;
+        cursor: zoom-in;
+        transform-origin: center;
+    }
+
+    .mermaid:hover {
+        transform: scale(1.7);
+        z-index: 1000;
+        position: relative;
+    }
+</style>
+
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <header>
+        <nav class="glass-nav">
+            <div class="logo">GY</div>
+            <a href="index.html" class="nav-icon" title="Back to Home"
+                style="color: var(--text-color); margin-left: auto; margin-right: 20px;">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <div class="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" style="min-height: 40vh; align-items: center;">
+            <div class="hero-content fade-in">
+                <h1 class="glitch" data-text="Reliability Dashboard">Reliability Dashboard</h1>
+                <h2 class="typing-text">Observability • Chaos Engineering • SLOs</h2>
+                <p class="hero-description">
+                    A transparency log of my portfolio's reliability engineering practices.
+                    Validating resilience continuously through Chaos Mesh and Prometheus.
+                </p>
+            </div>
+        </section>
+
+        <section id="slos" class="section">
+            <div class="glass-container">
+                <h2 class="section-title"><i class="fas fa-crosshairs"></i> Service Level Objectives (SLOs)</h2>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 20px; color: var(--text-color);">
+                    <thead>
+                        <tr style="border-bottom: 1px solid var(--secondary-color);">
+                            <th style="text-align: left; padding: 10px;">Objective</th>
+                            <th style="text-align: left; padding: 10px;">Target</th>
+                            <th style="text-align: left; padding: 10px;">Status (30d)</th>
+                            <th style="text-align: left; padding: 10px;">Burn Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px;">Availability (Uptime)</td>
+                            <td style="padding: 10px;">99.9%</td>
+                            <td style="padding: 10px; color: #4ade80;">99.99% ✅</td>
+                            <td style="padding: 10px;">0.1x (Safe)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;">Latency (P95)</td>
+                            <td style="padding: 10px;">
+                                < 200ms</td>
+                            <td style="padding: 10px; color: #4ade80;">45ms ✅</td>
+                            <td style="padding: 10px;">0x</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;">Error Rate (5xx)</td>
+                            <td style="padding: 10px;">
+                                < 0.1%</td>
+                            <td style="padding: 10px; color: #4ade80;">0.00% ✅</td>
+                            <td style="padding: 10px;">0x</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="chaos" class="section">
+            <h2 class="section-title"><i class="fas fa-bomb"></i> Chaos Experiments</h2>
+            <div class="projects-grid">
+                <div class="project-card glass-card">
+                    <div class="project-header">
+                        <i class="fas fa-skull"></i>
+                        <h3>Pod Kill Experiment</h3>
+                    </div>
+                    <p><strong>Scenario:</strong> Randomly terminate a backend pod every 60s.</p>
+                    <p><strong>Result:</strong> Cluster self-healed. 0% Downtime observed.</p>
+                    <div class="project-tech">
+                        <span style="background: #ef444422; color: #ef4444;">Chaos Mesh</span>
+                        <span>PASSED ✅</span>
+                    </div>
+                    <pre
+                        style="background: #0005; padding: 10px; margin-top: 10px; border-radius: 5px; font-size: 0.8rem;">
+[2025-12-22T14:48:00Z] Experiment: pod-kill-backend
+[2025-12-22T14:48:01Z] Action: Pod backend-5f4d3a killed
+[2025-12-22T14:48:02Z] Alert: PodRestarted (Severity: Info)
+[2025-12-22T14:48:04Z] Recovery: New pod Running
+[2025-12-22T14:48:05Z] SLO Check: Availability > 99.9% (TRUE)
+                    </pre>
+                </div>
+
+                <div class="project-card glass-card">
+                    <div class="project-header">
+                        <i class="fas fa-network-wired"></i>
+                        <h3>Network Latency</h3>
+                    </div>
+                    <p><strong>Scenario:</strong> Inject 200ms delay to backend traffic.</p>
+                    <p><strong>Result:</strong> Latency SLO alert fired within 30s.</p>
+                    <div class="project-tech">
+                        <span style="background: #ef444422; color: #ef4444;">Chaos Mesh</span>
+                        <span>VERIFIED ✅</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture" class="section">
+            <h2 class="section-title"><i class="fas fa-sitemap"></i> Hybrid Architecture</h2>
+            <div class="glass-card" style="display: flex; justify-content: center; overflow-x: auto;">
+                <div class="mermaid">
+                    graph TD
+                    subgraph "AWS Production (Always On)"
+                    User((User)) -->|HTTPS| CF[CloudFront CDN]
+                    CF -->|Static Assets| S3[S3 Bucket]
+                    CF -->|API Calls| APIG[API Gateway]
+                    APIG -->|JSON| Lambda[Lambda Function]
+                    Lambda -->|Read/Write| DDB[(DynamoDB)]
+                    end
+
+                    subgraph "Reliability Lab (Ephemeral)"
+                    SRE((SRE/Admin)) -->|Start Lab| LabScript[lab.sh]
+                    LabScript -->|Provisions| EC2[EC2 Spot Node]
+                    EC2 -->|Hosts| K3s[K3s Cluster]
+
+                    subgraph "K8s Namespace: Default"
+                    BackendPod[Backend Service]
+                    VerifyPod[Reliability Service]
+                    VerifyPod -->|Synthetic Traffic| BackendPod
+                    end
+
+                    subgraph "K8s Namespace: Monitoring"
+                    Prom[Prometheus]
+                    Graf[Grafana]
+                    Prom -->|Scrape| BackendPod
+                    end
+
+                    subgraph "K8s Namespace: Chaos Mesh"
+                    Chaos[Chaos Daemon]
+                    Chaos -->|Pod Kill| BackendPod
+                    end
+                    end
+
+                    classDef aws fill:#ff990033,stroke:#ff9900,color:#fff
+                    classDef k8s fill:#326ce533,stroke:#326ce5,color:#fff
+                    classDef chaos fill:#ef444433,stroke:#ef4444,color:#fff
+
+                    class S3,Lambda,DDB,CF,APIG aws
+                    class K3s,BackendPod,VerifyPod,Prom,Graf k8s
+                    class Chaos chaos
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="glass-footer">
+            <p>&copy; 2025 Gaurav Yadav. Reliability Engineering Portfolio.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
