@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 1. Start download immediately
         const link = document.createElement('a');
-        link.href = 'resume.pdf'; // Relative to index.html in frontend/
+        link.href = 'Gaurav_Yadav_Resume.pdf'; // Relative to index.html in frontend/
         link.download = 'Gaurav_Yadav_Resume.pdf';
         document.body.appendChild(link);
         link.click();
