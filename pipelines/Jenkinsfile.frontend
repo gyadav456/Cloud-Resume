@@ -18,7 +18,7 @@ pipeline {
                 script {
                     // Sync files to S3 bucket
                     // Assuming Jenkins has AWS credentials configured or IAM role attached
-                    sh "aws s3 sync . s3://${BUCKET_NAME} --exclude '.git/*' --exclude 'backend/*' --exclude 'infra/*' --exclude 'Jenkinsfile*' --delete --region ${AWS_REGION}"
+                    sh "aws s3 sync frontend s3://${BUCKET_NAME} --delete --region ${AWS_REGION}"
                 }
             }
         }
