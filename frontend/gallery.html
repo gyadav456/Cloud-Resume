@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography Gallery - Gaurav Yadav</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <header>
+        <nav class="glass-nav">
+            <div class="logo">GY</div>
+            <div class="mobile-menu-btn"><i class="fas fa-bars"></i></div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-controls" style="display: flex; gap: 15px; align-items: center;">
+                <a href="index.html" class="nav-icon" title="Back to Home"
+                    style="color: var(--text-color); font-size: 1.2rem; transition: color 0.3s;">
+                    <i class="fas fa-home"></i>
+                </a>
+                <div class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section" style="padding-top: 100px;">
+            <h2 class="section-title">Photography Gallery</h2>
+            <div id="gallery-grid" class="gallery-grid">
+                <!-- Images will be populated dynamically by script.js -->
+                <div class="gallery-loader">Loading images...</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="glass-footer">
+            <p>&copy; 2025 Gaurav Yadav. Captured with <i class="fas fa-camera"></i>.</p>
+            <p class="footer-links">
+                <a href="index.html">Back to Portfolio</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
