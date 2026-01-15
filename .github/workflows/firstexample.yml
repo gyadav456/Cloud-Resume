@@ -1,0 +1,13 @@
+name: First Workflow
+
+on: push
+
+jobs:
+    first_job:
+        runs-on: ubuntu-20.04
+        steps:
+        - name: welcome message
+          run: echo "first github action"
+
+        -  name: list files
+           run: ls
