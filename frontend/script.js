@@ -34,17 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function handleDownload(e) {
-        e.preventDefault();
+        // We do NOT prevent default here, allowing the browser to handle the download natively.
+        // e.preventDefault(); 
 
-        // 1. Start download immediately
-        const link = document.createElement('a');
-        link.href = 'Gaurav_Yadav_Resume.pdf'; // Relative to index.html in frontend/
-        link.download = 'Gaurav_Yadav_Resume.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        // 2. Increment download count
+        // Just track the download event
         try {
             const response = await fetch(apiEndpoint, {
                 method: 'POST',
@@ -192,6 +185,62 @@ document.addEventListener('DOMContentLoaded', () => {
     const galleryGrid = document.getElementById('gallery-grid');
     const galleryApiEndpoint = 'https://idfx15mrgd.execute-api.ap-south-1.amazonaws.com/gallery';
 
+    // Lightbox Logic
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeLightboxBtn = document.querySelector('.close-lightbox');
+    
+    let galleryImages = [];
+    let currentImageIndex = 0;
+
+    // Made globally accessible for HTML onclick buttons
+    window.changeImage = function(n) {
+        showLightboxImage(currentImageIndex += n);
+    }
+
+    function openLightbox(index) {
+        if (lightbox && lightboxImg) {
+            currentImageIndex = index;
+            showLightboxImage(currentImageIndex);
+            lightbox.style.display = "block";
+            document.body.style.overflow = 'hidden'; // Disable scroll
+        }
+    }
+
+    function showLightboxImage(index) {
+        if (index >= galleryImages.length) currentImageIndex = 0;
+        if (index < 0) currentImageIndex = galleryImages.length - 1;
+        
+        lightboxImg.src = galleryImages[currentImageIndex];
+    }
+
+    function closeLightbox() {
+        if (lightbox) {
+            lightbox.style.display = "none";
+            document.body.style.overflow = 'auto'; // Enable scroll
+        }
+    }
+
+    if (closeLightboxBtn) {
+        closeLightboxBtn.addEventListener('click', closeLightbox);
+    }
+
+    // Close on outside click
+    window.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            closeLightbox();
+        }
+    });
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+        if (lightbox.style.display === "block") {
+            if (e.key === "Escape") closeLightbox();
+            if (e.key === "ArrowLeft") changeImage(-1);
+            if (e.key === "ArrowRight") changeImage(1);
+        }
+    });
+
     async function loadGallery() {
         if (!galleryGrid) return;
 
@@ -210,8 +259,9 @@ document.addEventListener('DOMContentLoaded', () => {
             galleryGrid.innerHTML = ''; // Clear loader
 
             if (data.images && data.images.length > 0) {
-                // Sort or randomize? Let's just show them.
-                data.images.forEach(url => {
+                galleryImages = data.images; // Store for lightbox navigation
+                
+                galleryImages.forEach((url, index) => {
                     // Create container for hover effects
                     const itemDiv = document.createElement('div');
                     itemDiv.className = 'gallery-item';
@@ -221,7 +271,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     img.loading = 'lazy'; // Performance
                     img.alt = 'Photography';
 
-                    img.onclick = () => window.open(url, '_blank');
+                    // Update: Open Lightbox with Index
+                    itemDiv.onclick = () => openLightbox(index);
 
                     img.onerror = () => {
                         console.warn("Failed to load image:", url);
