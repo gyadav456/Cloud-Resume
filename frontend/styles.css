@@ -1114,14 +1114,23 @@ code {
     padding: 0 1rem;
 }
 
+/* Terminal Card - Default Dark Mode */
 .terminal-card {
-    background: rgba(30, 30, 30, 0.6) !important;
-    /* Semi-transparent dark bg */
+    background: #161b22;
+    /* Solid Dark BG for contrast in Dark Mode */
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     backdrop-filter: blur(10px);
+}
+
+/* Light Mode Overrides for Terminal - Natural Blend */
+[data-theme="light"] .terminal-card {
+    background: rgba(255, 255, 255, 0.9);
+    /* Light/White BG */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .terminal-card:hover {
@@ -1130,12 +1139,21 @@ code {
     border-color: var(--primary-color);
 }
 
+[data-theme="light"] .terminal-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
 .terminal-header {
     background: rgba(0, 0, 0, 0.3);
     padding: 8px 12px;
     display: flex;
     align-items: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="light"] .terminal-header {
+    background: rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .terminal-dots {
@@ -1163,11 +1181,18 @@ code {
     text-align: left;
 }
 
-/* Force Terminal Colors (Always Dark Mode style for Terminal) */
+/* YAML Syntax Highlighting - Dark Mode Defaults */
 .yaml-key {
-    color: #58a6ff; /* Always Light Blue */
+    color: #58a6ff;
+    /* Light Blue */
     display: block;
     margin-bottom: 5px;
+}
+
+/* Light Mode Overrides for YAML */
+[data-theme="light"] .yaml-key {
+    color: #0d47a1;
+    /* Darker Blue for Light Mode */
 }
 
 .yaml-list {
@@ -1176,12 +1201,29 @@ code {
     padding-left: 10px;
 }
 
+[data-theme="light"] .yaml-list {
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .yaml-item {
     display: block;
-    color: #8b949e; /* Always Light Grey */
+    color: #8b949e;
+    /* Light Grey */
     margin-bottom: 2px;
 }
 
+[data-theme="light"] .yaml-item {
+    color: #555;
+    /* Darker Grey */
+}
+
 .yaml-val {
-    color: #e6edf3; /* Always White/Light Text */
+    color: #e6edf3;
+    /* White/Light Text */
+}
+
+[data-theme="light"] .yaml-val {
+    color: #1f2328;
+    /* Dark/Black Text */
+    font-weight: 500;
 }
