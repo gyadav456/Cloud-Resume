@@ -1039,3 +1039,150 @@ footer {
     object-fit: cover;
     border-radius: 12px;
 }
+
+/* YAML Skills Code Block */
+.code-block-container {
+    background: #1e1e1e !important;
+    /* Dark editor background */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.code-header {
+    background: #2d2d2d;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #333;
+}
+
+.code-header .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.code-header .dot.red {
+    background: #ff5f56;
+}
+
+.code-header .dot.yellow {
+    background: #ffbd2e;
+}
+
+.code-header .dot.green {
+    background: #27c93f;
+}
+
+.code-header .filename {
+    margin-left: 10px;
+    color: #aeaeae;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.code-block-container pre {
+    margin: 0;
+    padding: 20px;
+    color: #d4d4d4;
+    overflow-x: auto;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Rudimentary YAML Syntax Highlighting (if no library) */
+/* Ideally, we'd use PrismJS, but we can do some basic coloring via CSS logic if spans were added.
+   For now, we rely on the clean monospaced look, but let's assume we might add spans later or if the user wants auto-highlighting.
+   Since we pasted raw text, let's give it a nice base color. */
+code {
+    color: #e6e6e6;
+}
+
+/* Mini Terminal Cards Design */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 0 1rem;
+}
+
+.terminal-card {
+    background: rgba(30, 30, 30, 0.6) !important;
+    /* Semi-transparent dark bg */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.terminal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary-color);
+}
+
+.terminal-header {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.terminal-dots {
+    display: flex;
+    gap: 6px;
+    margin-right: 12px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.terminal-title {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.terminal-body {
+    padding: 15px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.yaml-key {
+    color: var(--primary-color);
+    /* Blue for keys */
+    display: block;
+    margin-bottom: 5px;
+}
+
+.yaml-list {
+    margin-left: 10px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    padding-left: 10px;
+}
+
+.yaml-item {
+    display: block;
+    color: var(--secondary-color);
+    margin-bottom: 2px;
+}
+
+.yaml-val {
+    color: var(--text-color);
+    /* White for values */
+}
