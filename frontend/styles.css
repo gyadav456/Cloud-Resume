@@ -1163,9 +1163,9 @@ code {
     text-align: left;
 }
 
+/* Force Terminal Colors (Always Dark Mode style for Terminal) */
 .yaml-key {
-    color: var(--primary-color);
-    /* Blue for keys */
+    color: #58a6ff; /* Always Light Blue */
     display: block;
     margin-bottom: 5px;
 }
@@ -1178,11 +1178,10 @@ code {
 
 .yaml-item {
     display: block;
-    color: var(--secondary-color);
+    color: #8b949e; /* Always Light Grey */
     margin-bottom: 2px;
 }
 
 .yaml-val {
-    color: var(--text-color);
-    /* White for values */
+    color: #e6edf3; /* Always White/Light Text */
 }
