@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download SCA Resolver
         run: |
@@ -18,7 +18,7 @@ jobs:
         run: ./ScaResolver offline -s . -n test-project -r result.json --log-level debug > sca_resolver_debug.log 2>&1
 
       - name: Upload SCA Resolver Debug Log
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: sca-resolver-debug-log
           path: sca_resolver_debug.log
