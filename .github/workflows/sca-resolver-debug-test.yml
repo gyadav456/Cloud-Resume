@@ -5,17 +5,21 @@ on:
 jobs:
   sca-resolver-debug:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Download SCA Resolver
         run: |
-          wget <URL_TO_SCA_RESOLVER_BINARY>
+          wget <URL_TO_SCA_RESOLVER_BINARY> -O ScaResolver
           chmod +x ./ScaResolver
+          ls -lh ./ScaResolver
+          ./ScaResolver --version
 
       - name: Run SCA Resolver with Debug Logging
-        run: ./ScaResolver offline -s . -n test-project -r result.json --log-level debug > sca_resolver_debug.log 2>&1
+        run: ./ScaResolver offline -s . -n test-project -r result.json --log-level debug 2>&1 | tee sca_resolver_debug.log
 
       - name: Upload SCA Resolver Debug Log
         uses: actions/upload-artifact@v4
